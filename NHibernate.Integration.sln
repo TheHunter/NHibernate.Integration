@@ -10,8 +10,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{D28506
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CriteriaAssembler", "E:\net\CriteriaAssembler\CriteriaAssembler.csproj", "{6FC81E11-C826-49CC-BFFD-1F56B2B25F11}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -22,10 +20,6 @@ Global
 		{FAC9A661-50A0-4FC4-AB9D-AD733DD48E09}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FAC9A661-50A0-4FC4-AB9D-AD733DD48E09}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FAC9A661-50A0-4FC4-AB9D-AD733DD48E09}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6FC81E11-C826-49CC-BFFD-1F56B2B25F11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6FC81E11-C826-49CC-BFFD-1F56B2B25F11}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6FC81E11-C826-49CC-BFFD-1F56B2B25F11}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6FC81E11-C826-49CC-BFFD-1F56B2B25F11}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
