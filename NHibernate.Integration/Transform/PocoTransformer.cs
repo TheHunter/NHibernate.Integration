@@ -1,4 +1,5 @@
 ﻿using System;
+using DynamicMapResolver;
 
 namespace NHibernate.Transform
 {
@@ -10,36 +11,36 @@ namespace NHibernate.Transform
     {
         private readonly System.Type typeToTransform;
         private readonly System.Type typeTransformer;
-        private readonly Func<object, object> transformer;
-        //private readonly ISourceMapper mapper;
-        
+        //private readonly Func<object, object> transformer;
+        private readonly ISourceMapper mapper;
+
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="transformer"></param>
-        /// <param name="typeToTransform"></param>
-        /// <param name="typeTransformer"></param>
-        public PocoTransformer(Func<object, object> transformer , System.Type typeToTransform, System.Type typeTransformer)
+        /// <param name="mapper"></param>
+        public PocoTransformer(ISourceMapper mapper)
         {
-            if (typeToTransform == null)
-                throw new ArgumentNullException("typeToTransform", "TypeToResolve cannot be null.");
+            if (mapper == null)
+                throw new ArgumentNullException("mapper", "mapper object cannot be null.");
 
-            if (typeTransformer == null)
-                throw new ArgumentNullException("typeTransformer", "typeResolver cannot be null.");
+            this.typeToTransform = mapper.SourceType;
+            this.typeTransformer = mapper.DestinationType;
+            this.mapper = mapper;
 
-            //if (mapper == null)
-            //    throw new ArgumentNullException("mapper", "mapper object cannot be null.");
+            #region
+            //if (transformer == null)
+            //    throw new ArgumentNullException("transformer", "mapper object cannot be null.");
 
-            //this.typeToTransform = mapper.SourceType;
-            //this.typeTransformer = mapper.DestinationType;
-            //this.mapper = mapper;
+            //if (typeToTransform == null)
+            //    throw new ArgumentNullException("typeToTransform", "TypeToResolve cannot be null.");
 
-            if (transformer == null)
-                throw new ArgumentNullException("transformer", "mapper object cannot be null.");
+            //if (typeTransformer == null)
+            //    throw new ArgumentNullException("typeTransformer", "typeResolver cannot be null.");
 
-            this.typeToTransform = typeToTransform;
-            this.typeTransformer = typeTransformer;
-            this.transformer = transformer;
+            //this.typeToTransform = typeToTransform;
+            //this.typeTransformer = typeTransformer;
+            //this.transformer = transformer;
+            #endregion
         }
 
         /// <summary>
@@ -65,8 +66,8 @@ namespace NHibernate.Transform
         /// <returns></returns>
         public object Transform(object value)
         {
-            //return mapper.Map(value);
-            return this.transformer(value);
+            return mapper.Map(value);
+            //return this.transformer(value);
         }
 
         /// <summary>

@@ -13,14 +13,14 @@ namespace NHibernate.Criterion
     public class CriteriaBuilder
         : ICriteriaBuilder
     {
-        private readonly Func<System.Type, IPersistentClassInfo> metadataProvider;
+        private readonly Func<System.Type, IClassMetadata> metadataProvider;
         private MatchMode likeMode;
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="metadataProvider"></param>
-        public CriteriaBuilder(Func<System.Type, IPersistentClassInfo> metadataProvider)
+        public CriteriaBuilder(Func<System.Type, IClassMetadata> metadataProvider)
         {
             if (metadataProvider == null)
                 throw new CriteriaBuilderException("The metadataProvider instance cannot be null.");
@@ -92,7 +92,7 @@ namespace NHibernate.Criterion
         private DetachedCriteria BuildCriteria(System.Type persistentClass, object instance)
         {
             System.Type typeClass = persistentClass;
-            IPersistentClassInfo metadataInfo = metadataProvider.Invoke(typeClass);
+            IPersistentClassInfo metadataInfo = new PersistentClassInfo(metadataProvider.Invoke(typeClass));
 
             if (metadataInfo == null)
                 throw new Exception("non metadata info.");
@@ -147,7 +147,7 @@ namespace NHibernate.Criterion
                 return;
 
             System.Type typeClass = instance.GetType();
-            IPersistentClassInfo metadataInfo = metadataProvider.Invoke(typeClass);
+            IPersistentClassInfo metadataInfo = new PersistentClassInfo(metadataProvider.Invoke(typeClass));
 
             if (metadataInfo == null)
                 throw new Exception("non metadata info.");
