@@ -18,8 +18,6 @@ namespace NHibernate.Transform
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="typeToTransform"></param>
-        /// <param name="typeTransformer"></param>
         /// <param name="converter"></param>
         public DelegationTransformer(Func<TSource, TDestination> converter)
         {

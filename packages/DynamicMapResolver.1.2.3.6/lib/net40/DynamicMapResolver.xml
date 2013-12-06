@@ -1,0 +1,688 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DynamicMapResolver</name>
+    </assembly>
+    <members>
+        <member name="T:DynamicMapResolver.Exceptions.FailedSetPropertyException">
+            <summary>
+            Indicates an error when set operations failed.
+            </summary>
+        </member>
+        <member name="M:DynamicMapResolver.Exceptions.FailedSetPropertyException.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:DynamicMapResolver.Exceptions.FailedSetPropertyException.#ctor(System.String,System.Exception)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="innerException"></param>
+        </member>
+        <member name="T:DynamicMapResolver.Exceptions.LambdaSetterException">
+            <summary>
+            Indicates an error when the action setter is null.
+            </summary>
+        </member>
+        <member name="M:DynamicMapResolver.Exceptions.LambdaSetterException.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:DynamicMapResolver.Exceptions.LambdaSetterException.#ctor(System.String,System.Exception)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="innerException"></param>
+        </member>
+        <member name="T:DynamicMapResolver.Exceptions.MapperParameterException">
+            <summary>
+            Indicates when a wrong parameter is used.
+            </summary>
+        </member>
+        <member name="M:DynamicMapResolver.Exceptions.MapperParameterException.#ctor(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="parameterName"></param>
+            <param name="message"></param>
+        </member>
+        <member name="M:DynamicMapResolver.Exceptions.MapperParameterException.#ctor(System.String,System.String,System.Exception)">
+            <summary>
+            
+            </summary>
+            <param name="parameterName"></param>
+            <param name="message"></param>
+            <param name="innerException"></param>
+        </member>
+        <member name="P:DynamicMapResolver.Exceptions.MapperParameterException.ParameterName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:DynamicMapResolver.Exceptions.MappingFailedActionException">
+            <summary>
+            Indicates an error when BeforeMapping / AfterMapping action is executed.
+            </summary>
+        </member>
+        <member name="M:DynamicMapResolver.Exceptions.MappingFailedActionException.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:DynamicMapResolver.Exceptions.MappingFailedActionException.#ctor(System.String,System.Exception)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="innerException"></param>
+        </member>
+        <member name="T:DynamicMapResolver.Exceptions.NonUniqueSetterException">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:DynamicMapResolver.Exceptions.NonUniqueSetterException.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:DynamicMapResolver.Exceptions.NonUniqueSetterException.#ctor(System.String,System.Exception)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="innerException"></param>
+        </member>
+        <member name="T:DynamicMapResolver.FactoryMapper">
+            <summary>
+            A factory class used for making default mappers.
+            </summary>
+        </member>
+        <member name="M:DynamicMapResolver.FactoryMapper.DynamicResolutionMapper(System.Type,System.Type)">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DynamicMapResolver.FactoryMapper.DynamicResolutionMapper``2">
+            <summary>
+            
+            </summary>
+            <typeparam name="TSource"></typeparam>
+            <typeparam name="TDestination"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:DynamicMapResolver.FactoryMapper.DynamicResolutionMapper``2(System.Action{``1},System.Action{``1})">
+            <summary>
+            
+            </summary>
+            <typeparam name="TSource"></typeparam>
+            <typeparam name="TDestination"></typeparam>
+            <param name="beforeMapping"></param>
+            <param name="afterMapping"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DynamicMapResolver.FactoryMapper.MakeDefaultContainer``2">
+            <summary>
+            Initialize a new container with default property mappers.
+            </summary>
+            <typeparam name="TSource"></typeparam>
+            <typeparam name="TDestination"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:DynamicMapResolver.FactoryMapper.DynamicResolutionMerger``2">
+            <summary>
+            Get a default ISourceMerger for the given types.
+            </summary>
+            <typeparam name="TSource"></typeparam>
+            <typeparam name="TDestination"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:DynamicMapResolver.FactoryMapper.DynamicResolutionMerger``2(System.Action{``1},System.Action{``1})">
+            <summary>
+            
+            </summary>
+            <typeparam name="TSource"></typeparam>
+            <typeparam name="TDestination"></typeparam>
+            <param name="beforeMapping"></param>
+            <param name="afterMapping"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DynamicMapResolver.FactoryMapper.GetPropertiesOf(System.Type)">
+            <summary>
+            Gets all public properties for the given type.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DynamicMapResolver.FactoryMapper.GetSuitedPropertiesOf(System.Type,System.Type)">
+            <summary>
+            Get a dictionary which every couple corrispond to a property from TSurce type (as Key) and a property from second given type (as value)
+            with the same name.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DynamicMapResolver.FactoryMapper.GetDefaultPropertyMappers``2">
+            <summary>
+            Get all default property mappers for the given types.
+            </summary>
+            <typeparam name="TSource"></typeparam>
+            <typeparam name="TDestination"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:DynamicMapResolver.FactoryMapper.GetDefaultPropertyMappers(System.Type,System.Type)">
+            <summary>
+            
+            </summary>
+            <param name="tSource"></param>
+            <param name="tDestination"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DynamicMapResolver.FactoryMapper.DynamicPropertyMap``2(System.Reflection.PropertyInfo,System.Reflection.PropertyInfo)">
+            <summary>
+            Makes an action which corrispond to set a destination property with the current TSource property value.
+            </summary>
+            <typeparam name="TSource"></typeparam>
+            <typeparam name="TDestination"></typeparam>
+            <param name="srcProperty">The PropertyInfo which serves to get the Getter method.</param>
+            <param name="destProperty">The PropertyInfo which serves to get the Setter method.</param>
+            <returns></returns>
+        </member>
+        <member name="M:DynamicMapResolver.FactoryMapper.CheckProperties(System.Reflection.PropertyInfo,System.Reflection.PropertyInfo)">
+            <summary>
+            
+            </summary>
+            <param name="srcProperty"></param>
+            <param name="destProperty"></param>
+        </member>
+        <member name="M:DynamicMapResolver.FactoryMapper.GetGetterValue(System.Object,System.Type)">
+            <summary>
+            
+            </summary>
+            <param name="res"></param>
+            <param name="propSetter"></param>
+            <returns></returns>
+        </member>
+        <member name="T:DynamicMapResolver.IContainerBuilder`2">
+            <summary>
+            
+            </summary>
+            <typeparam name="TSource"></typeparam>
+            <typeparam name="TDestination"></typeparam>
+        </member>
+        <member name="M:DynamicMapResolver.IContainerBuilder`2.BuildMapper">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DynamicMapResolver.IContainerBuilder`2.BuildMerger">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:DynamicMapResolver.IMapperContainer`2">
+            <summary>
+            
+            </summary>
+            <typeparam name="TSource"></typeparam>
+            <typeparam name="TDestination"></typeparam>
+        </member>
+        <member name="M:DynamicMapResolver.IMapperContainer`2.Include(DynamicMapResolver.IPropertyMapper{`0,`1})">
+            <summary>
+            
+            </summary>
+            <param name="propertyMapper"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DynamicMapResolver.IMapperContainer`2.Exclude(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="propertyName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DynamicMapResolver.IMapperContainer`2.Exclude(System.Reflection.PropertyInfo)">
+            <summary>
+            
+            </summary>
+            <param name="property"></param>
+            <returns></returns>
+        </member>
+        <member name="T:DynamicMapResolver.Impl.MapperContainer`2">
+            <summary>
+            
+            </summary>
+            <typeparam name="TSource"></typeparam>
+            <typeparam name="TDestination"></typeparam>
+        </member>
+        <member name="M:DynamicMapResolver.Impl.MapperContainer`2.#ctor">
+            <summary>
+            Creates an empty container.
+            </summary>
+        </member>
+        <member name="M:DynamicMapResolver.Impl.MapperContainer`2.#ctor(System.Collections.Generic.IEnumerable{DynamicMapResolver.IPropertyMapper{`0,`1}})">
+            <summary>
+            
+            </summary>
+            <param name="propertyMappers"></param>
+        </member>
+        <member name="M:DynamicMapResolver.Impl.MapperContainer`2.BuildMapper">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DynamicMapResolver.Impl.MapperContainer`2.BuildMapper(System.Action{`1},System.Action{`1})">
+            <summary>
+            
+            </summary>
+            <param name="beforeMapping"></param>
+            <param name="afterMapping"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DynamicMapResolver.Impl.MapperContainer`2.BuildMerger">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DynamicMapResolver.Impl.MapperContainer`2.BuildMerger(System.Action{`1},System.Action{`1})">
+            <summary>
+            
+            </summary>
+            <param name="beforeMapping"></param>
+            <param name="afterMapping"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DynamicMapResolver.Impl.MapperContainer`2.Include(DynamicMapResolver.IPropertyMapper{`0,`1})">
+            <summary>
+            
+            </summary>
+            <param name="propertyMapper"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DynamicMapResolver.Impl.MapperContainer`2.Exclude(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="propertyName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DynamicMapResolver.Impl.MapperContainer`2.Exclude(System.Reflection.PropertyInfo)">
+            <summary>
+            
+            </summary>
+            <param name="property"></param>
+            <returns></returns>
+        </member>
+        <member name="T:DynamicMapResolver.Impl.PropertyMapInfo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:DynamicMapResolver.IPropertyMapInfo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:DynamicMapResolver.IPropertyMapInfo.PropertySource">
+            <summary>
+            The property source which value will set the associated property destination.
+            </summary>
+        </member>
+        <member name="P:DynamicMapResolver.IPropertyMapInfo.PropertyDestination">
+            <summary>
+            The property destination which value will be set from property source value.
+            </summary>
+        </member>
+        <member name="M:DynamicMapResolver.Impl.PropertyMapInfo.#ctor(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="propertySrc"></param>
+            <param name="propertyDest"></param>
+        </member>
+        <member name="P:DynamicMapResolver.Impl.PropertyMapInfo.PropertySource">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:DynamicMapResolver.Impl.PropertyMapInfo.PropertyDestination">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:DynamicMapResolver.Impl.PropertyMapper`2">
+            <summary>
+            
+            </summary>
+            <typeparam name="TSource"></typeparam>
+            <typeparam name="TDestination"></typeparam>
+        </member>
+        <member name="T:DynamicMapResolver.IPropertyMapper`2">
+            <summary>
+            A generic interface for mapping properties.
+            </summary>
+            <typeparam name="TSource">The source type</typeparam>
+            <typeparam name="TDestination">The destination type</typeparam>
+        </member>
+        <member name="P:DynamicMapResolver.IPropertyMapper`2.Setter">
+            <summary>
+            The action to execute for setting the destionation property value.
+            </summary>
+        </member>
+        <member name="M:DynamicMapResolver.Impl.PropertyMapper`2.#ctor(System.Action{`0,`1})">
+            <summary>
+            
+            </summary>
+            <param name="setter"></param>
+        </member>
+        <member name="M:DynamicMapResolver.Impl.PropertyMapper`2.#ctor(System.Action{`0,`1},System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="setter"></param>
+            <param name="propertySrc"></param>
+            <param name="propertyDest"></param>
+        </member>
+        <member name="M:DynamicMapResolver.Impl.PropertyMapper`2.#ctor(System.Reflection.PropertyInfo,System.Reflection.PropertyInfo)">
+            <summary>
+            
+            </summary>
+            <param name="srcProperty"></param>
+            <param name="destProperty"></param>
+        </member>
+        <member name="M:DynamicMapResolver.Impl.PropertyMapper`2.#ctor(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="propertySrc"></param>
+            <param name="propertyDest"></param>
+        </member>
+        <member name="M:DynamicMapResolver.Impl.PropertyMapper`2.ToString">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:DynamicMapResolver.Impl.PropertyMapper`2.Setter">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:DynamicMapResolver.Impl.PropertyMapper">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:DynamicMapResolver.IPropertyMapper">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:DynamicMapResolver.IPropertyMapper.SrcPropertyInfo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:DynamicMapResolver.IPropertyMapper.destPropertyInfo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:DynamicMapResolver.Impl.PropertyMapper.#ctor(System.Reflection.PropertyInfo,System.Reflection.PropertyInfo)">
+            <summary>
+            
+            </summary>
+            <param name="srcProperty"></param>
+            <param name="destProperty"></param>
+        </member>
+        <member name="T:DynamicMapResolver.Impl.SourceMapper`2">
+            <summary>
+            
+            </summary>
+            <typeparam name="TSource"></typeparam>
+            <typeparam name="TDestination"></typeparam>
+        </member>
+        <member name="T:DynamicMapResolver.Impl.SourceTransformer`2">
+            <summary>
+            
+            </summary>
+            <typeparam name="TSource"></typeparam>
+            <typeparam name="TDestination"></typeparam>
+        </member>
+        <member name="T:DynamicMapResolver.ISourceTransformer`2">
+            <summary>
+            A generic interface for transforming object data source into object data destination.
+            </summary>
+            <typeparam name="TSource">The source object type to transform</typeparam>
+            <typeparam name="TDestination">The destination object type to be transformed.</typeparam>
+        </member>
+        <member name="P:DynamicMapResolver.ISourceTransformer`2.BeforeMapping">
+            <summary>
+            An action which be executed before mapping properties.
+            </summary>
+        </member>
+        <member name="P:DynamicMapResolver.ISourceTransformer`2.AfterMapping">
+            <summary>
+            An action which be executed after mapping properties.
+            </summary>
+        </member>
+        <member name="P:DynamicMapResolver.ISourceTransformer`2.PropertyMappers">
+            <summary>
+            A set of properties mappers for mapping destination object properties.
+            </summary>
+        </member>
+        <member name="M:DynamicMapResolver.Impl.SourceTransformer`2.#ctor(System.Collections.Generic.IEnumerable{DynamicMapResolver.IPropertyMapper{`0,`1}},System.Action{`1},System.Action{`1})">
+            <summary>
+            
+            </summary>
+            <param name="propertyMappers"></param>
+            <param name="beforeMapping"></param>
+            <param name="afterMapping"></param>
+        </member>
+        <member name="M:DynamicMapResolver.Impl.SourceTransformer`2.OnMapping(`0,`1,System.Collections.Generic.IEnumerable{DynamicMapResolver.IPropertyMapper{`0,`1}})">
+            <summary>
+            
+            </summary>
+            <param name="source"></param>
+            <param name="destination"></param>
+            <param name="propertiesToMap"></param>
+        </member>
+        <member name="M:DynamicMapResolver.Impl.SourceTransformer`2.OnMapping(`0,`1,System.Boolean,System.Collections.Generic.IEnumerable{DynamicMapResolver.IPropertyMapper{`0,`1}})">
+            <summary>
+            
+            </summary>
+            <param name="source"></param>
+            <param name="destination"></param>
+            <param name="ignoreExceptionOnMapping"></param>
+            <param name="propertiesToMap"></param>
+        </member>
+        <member name="P:DynamicMapResolver.Impl.SourceTransformer`2.BeforeMapping">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:DynamicMapResolver.Impl.SourceTransformer`2.AfterMapping">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:DynamicMapResolver.Impl.SourceTransformer`2.PropertyMappers">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:DynamicMapResolver.ISourceMapper`2">
+            <summary>
+            A simple definition for mapping object data source into object data destination.
+            </summary>
+            <typeparam name="TSource"></typeparam>
+            <typeparam name="TDestination"></typeparam>
+        </member>
+        <member name="T:DynamicMapResolver.ISourceMapper">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:DynamicMapResolver.ISourceMapper.Map(System.Object)">
+            <summary>
+            
+            </summary>
+            <param name="source"></param>
+            <returns></returns>
+        </member>
+        <member name="P:DynamicMapResolver.ISourceMapper.SourceType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:DynamicMapResolver.ISourceMapper.DestinationType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:DynamicMapResolver.ISourceMapper`2.Map(`0)">
+            <summary>
+            Maps the source object transforming into destionation object type.
+            </summary>
+            <param name="source"></param>
+            <returns>returns the source object transformed as destionation type.</returns>
+        </member>
+        <member name="M:DynamicMapResolver.Impl.SourceMapper`2.#ctor(System.Collections.Generic.IEnumerable{DynamicMapResolver.IPropertyMapper{`0,`1}},System.Action{`1},System.Action{`1})">
+            <summary>
+            
+            </summary>
+            <param name="propertyMappers"></param>
+            <param name="beforeMapping"></param>
+            <param name="afterMapping"></param>
+        </member>
+        <member name="M:DynamicMapResolver.Impl.SourceMapper`2.#ctor(System.Collections.Generic.IEnumerable{DynamicMapResolver.IPropertyMapper{`0,`1}},System.Type,System.Type,System.Action{`1},System.Action{`1})">
+            <summary>
+            
+            </summary>
+            <param name="propertyMappers"></param>
+            <param name="sourceType"></param>
+            <param name="destinationType"></param>
+            <param name="beforeMapping"></param>
+            <param name="afterMapping"></param>
+        </member>
+        <member name="M:DynamicMapResolver.Impl.SourceMapper`2.Map(`0)">
+            <summary>
+            
+            </summary>
+            <param name="source"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DynamicMapResolver.Impl.SourceMapper`2.DynamicMapResolver#ISourceMapper#Map(System.Object)">
+            <summary>
+            
+            </summary>
+            <param name="source"></param>
+            <returns></returns>
+        </member>
+        <member name="P:DynamicMapResolver.Impl.SourceMapper`2.SourceType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:DynamicMapResolver.Impl.SourceMapper`2.DestinationType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:DynamicMapResolver.Impl.SourceMapper">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:DynamicMapResolver.Impl.SourceMapper.#ctor(System.Type,System.Type,System.Collections.Generic.IEnumerable{DynamicMapResolver.IPropertyMapper})">
+            <summary>
+            
+            </summary>
+            <param name="sourceType"></param>
+            <param name="destinationType"></param>
+            <param name="propertyMappers"></param>
+        </member>
+        <member name="T:DynamicMapResolver.Impl.SourceMerger`2">
+            <summary>
+            
+            </summary>
+            <typeparam name="TSource"></typeparam>
+            <typeparam name="TDestination"></typeparam>
+        </member>
+        <member name="T:DynamicMapResolver.ISourceMerger`2">
+            <summary>
+            A generic interface for merging object data source into object data destination.
+            </summary>
+            <typeparam name="TSource"></typeparam>
+            <typeparam name="TDestination"></typeparam>
+        </member>
+        <member name="M:DynamicMapResolver.ISourceMerger`2.Merge(`0,`1)">
+            <summary>
+            Merges the object data source into object data destination.
+            </summary>
+            <param name="source">Data source object type</param>
+            <param name="destination">Data destination object type</param>
+            <returns>returns a reference destination after merging with objectdata source.</returns>
+        </member>
+        <member name="M:DynamicMapResolver.ISourceMerger`2.Merge(`0,`1,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Merges the object data source into object data destination using a custom source property filter.
+            </summary>
+            <param name="source">Data source object type</param>
+            <param name="destination">Data destination object type</param>
+            <param name="filter">A set of source properties names which will be used for filtering property mappers</param>
+            <returns>returns a reference destination after merging with objectdata source.</returns>
+        </member>
+        <member name="M:DynamicMapResolver.Impl.SourceMerger`2.#ctor(System.Collections.Generic.IEnumerable{DynamicMapResolver.IPropertyMapper{`0,`1}},System.Action{`1},System.Action{`1})">
+            <summary>
+            
+            </summary>
+            <param name="propertyMappers"></param>
+            <param name="beforeMapping"></param>
+            <param name="afterMapping"></param>
+        </member>
+        <member name="M:DynamicMapResolver.Impl.SourceMerger`2.Merge(`0,`1)">
+            <summary>
+            
+            </summary>
+            <param name="source"></param>
+            <param name="destination"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DynamicMapResolver.Impl.SourceMerger`2.Merge(`0,`1,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            
+            </summary>
+            <param name="source"></param>
+            <param name="destination"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="T:DynamicMapResolver.IUserTransformer`2">
+            <summary>
+            A custom definition for user transformers.
+            </summary>
+            <typeparam name="TSource"></typeparam>
+            <typeparam name="TDestination"></typeparam>
+        </member>
+        <member name="M:DynamicMapResolver.IUserTransformer`2.Transform(`0,`1)">
+            <summary>
+            
+            </summary>
+            <param name="source"></param>
+            <param name="destination"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
