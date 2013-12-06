@@ -72,6 +72,7 @@
     <Compile Include="Resolvers\PocoResolver.cs" />
     <Compile Include="ServiceLocator\EnterpriseServiceResolver.cs" />
     <Compile Include="ServiceLocator\IServiceResolver.cs" />
+    <Compile Include="Transform\DelegationTransformer.cs" />
     <Compile Include="Transform\IPocoTransformer.cs" />
     <Compile Include="Transform\IPocoTransformerResult.cs" />
     <Compile Include="Transform\PocoTransformer.cs" />
