@@ -8,7 +8,7 @@ namespace NHibernate.Transform
 	/// <summary>
 	/// 
 	/// </summary>
-	internal class PocoTransformerResult
+	public class PocoTransformerResult
 		: IPocoTransformerResult
 	{
 		private readonly System.Type resultType;
@@ -43,19 +43,30 @@ namespace NHibernate.Transform
 			this.pocoAccessorResolver = pocoAccessorResolver;
 		}
 
-		
+		/// <summary>
+		/// 
+		/// </summary>
 		public System.Type ResultType
 		{
 			get { return this.resultType; }
 		}
 
-		
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="collection"></param>
+		/// <returns></returns>
 		public IList TransformList(IList collection)
 		{
 			return collection;
 		}
 
-
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="tuple"></param>
+		/// <param name="aliases"></param>
+		/// <returns></returns>
 		public object TransformTuple(object[] tuple, string[] aliases)
 		{
 			if (aliases == null)
@@ -99,7 +110,11 @@ namespace NHibernate.Transform
 			}
 		}
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="instance"></param>
+        /// <returns></returns>
 		public object TransformInstance(object instance)
 		{
 			if (instance == null) return null;
@@ -125,7 +140,10 @@ namespace NHibernate.Transform
 			return null;
 		}
 
-		
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
 		public override int GetHashCode()
 		{
 			return this.resultType.GetHashCode();

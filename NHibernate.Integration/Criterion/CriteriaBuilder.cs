@@ -95,7 +95,7 @@ namespace NHibernate.Criterion
             IPersistentClassInfo metadataInfo = new PersistentClassInfo(metadataProvider.Invoke(typeClass));
 
             if (metadataInfo == null)
-                throw new Exception("non metadata info.");
+                throw new MissingMetadataException(string.Format("No metadata info for type of <{0}>", typeClass.FullName));
 
             string alias = typeClass.Name.ToLower();
             DetachedCriteria root = DetachedCriteria.For(typeClass, alias);
@@ -150,7 +150,7 @@ namespace NHibernate.Criterion
             IPersistentClassInfo metadataInfo = new PersistentClassInfo(metadataProvider.Invoke(typeClass));
 
             if (metadataInfo == null)
-                throw new Exception("non metadata info.");
+                throw new MissingMetadataException(string.Format("No metadata info for type of <{0}>", typeClass.FullName));
 
             object idValue = metadataInfo.HasIdentifierProperty ? metadataInfo.GetIdentifier(instance, this.Mode) : null;
 

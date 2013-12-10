@@ -9,7 +9,7 @@ namespace NHibernate.Transform
     /// 
     /// </summary>
     public class DelegationTransformer<TSource, TDestination>
-        : IPocoTransformer
+        : IPocoTransformer<TSource, TDestination>
     {
         private readonly System.Type typeToTransform;
         private readonly System.Type typeTransformer;
@@ -21,6 +21,9 @@ namespace NHibernate.Transform
         /// <param name="converter"></param>
         public DelegationTransformer(Func<TSource, TDestination> converter)
         {
+            if (converter == null)
+                throw new ArgumentNullException("converter", string.Format("GenericTransformer of <{0}, {1}> cannot be null.", typeof(TSource).Name, typeof(TDestination).Name));
+
             this.typeToTransform = typeof(TSource);
             this.typeTransformer = typeof(TDestination);
             this.converter = converter;
@@ -39,14 +42,58 @@ namespace NHibernate.Transform
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="source"></param>
         /// <returns></returns>
-        public object Transform(object value)
+        public TDestination Transform(TSource source)
         {
-            if (value is TSource)
-                return this.converter((TSource)value);
+            return this.converter.Invoke(source);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public object Transform(object source)
+        {
+            if (source is TSource)
+                return this.converter((TSource)source);
 
             return null;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+                return false;
+
+            if (obj is PocoTransformer)
+                return this.GetHashCode() == obj.GetHashCode();
+
+            return false;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override int GetHashCode()
+        {
+            return 7 * (this.typeToTransform.GetHashCode() - this.typeTransformer.GetHashCode());
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return string.Format("Type to resolve: {0}, Type resolver: {1}", this.TypeToTransform.FullName, this.TypeTransformer.FullName);
         }
     }
 }

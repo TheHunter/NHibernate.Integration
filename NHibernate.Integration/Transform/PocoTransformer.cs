@@ -11,7 +11,6 @@ namespace NHibernate.Transform
     {
         private readonly System.Type typeToTransform;
         private readonly System.Type typeTransformer;
-        //private readonly Func<object, object> transformer;
         private readonly ISourceMapper mapper;
 
         /// <summary>
@@ -26,21 +25,6 @@ namespace NHibernate.Transform
             this.typeToTransform = mapper.SourceType;
             this.typeTransformer = mapper.DestinationType;
             this.mapper = mapper;
-
-            #region
-            //if (transformer == null)
-            //    throw new ArgumentNullException("transformer", "mapper object cannot be null.");
-
-            //if (typeToTransform == null)
-            //    throw new ArgumentNullException("typeToTransform", "TypeToResolve cannot be null.");
-
-            //if (typeTransformer == null)
-            //    throw new ArgumentNullException("typeTransformer", "typeResolver cannot be null.");
-
-            //this.typeToTransform = typeToTransform;
-            //this.typeTransformer = typeTransformer;
-            //this.transformer = transformer;
-            #endregion
         }
 
         /// <summary>
@@ -62,12 +46,11 @@ namespace NHibernate.Transform
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="source"></param>
         /// <returns></returns>
-        public object Transform(object value)
+        public object Transform(object source)
         {
-            return mapper.Map(value);
-            //return this.transformer(value);
+            return mapper.Map(source);
         }
 
         /// <summary>
