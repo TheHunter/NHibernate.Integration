@@ -96,10 +96,7 @@ namespace NHibernate.Resolvers
 		    IPocoTransformer resolver = propertyTransformers.FirstOrDefault(n => n.TypeTransformer == type)
                 ?? (isNullable ? propertyTransformers.FirstOrDefault(n => n.TypeTransformer == type.GetGenericArguments()[0]) : null);
 
-			if (resolver == null)
-				return null;
-
-			return resolver.Transform(instance);
+			return resolver == null ? null : resolver.Transform(instance);
 		}
 
 		/// <summary>
