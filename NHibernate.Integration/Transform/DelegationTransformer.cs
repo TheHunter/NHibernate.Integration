@@ -72,7 +72,7 @@ namespace NHibernate.Transform
             if (obj == null)
                 return false;
 
-            if (obj is PocoTransformer)
+            if (obj is DelegationTransformer<TSource, TDestination>)
                 return this.GetHashCode() == obj.GetHashCode();
 
             return false;
