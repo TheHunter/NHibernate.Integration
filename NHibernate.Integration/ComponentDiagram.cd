@@ -1,0 +1,206 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Comment CommentText="Componenti da deprecare">
+    <Position X="2.654" Y="0.5" Height="0.531" Width="1.7" />
+  </Comment>
+  <Comment CommentText="Da Eliminare il membro TransformInstance in IPocoTransformer">
+    <Position X="7.25" Y="4" Height="0.531" Width="1.7" />
+  </Comment>
+  <Class Name="NHibernate.Transform.DelegationTransformer&lt;TSource, TDestination&gt;" BaseTypeListCollapsed="true">
+    <Position X="5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAFAAAAAAAAAAAAFwAAABAQAAAAAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>Transform\DelegationTransformer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="NHibernate.Transform.PocoTransformer" BaseTypeListCollapsed="true">
+    <Position X="2.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAIAAAFwAAABAQAAAAAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>Transform\PocoTransformer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="NHibernate.Transform.PocoTransformerResult" BaseTypeListCollapsed="true">
+    <Position X="11.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAAAAAAAAAAAAABQAAIEgAAAAAAAAEBA=</HashCode>
+      <FileName>Transform\PocoTransformerResult.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="NHibernate.ServiceLocator.EnterpriseServiceResolver">
+    <Position X="18.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAgAAAAIAAAAAAABAgAAAAAAgAAAAIAAAAA=</HashCode>
+      <FileName>ServiceLocator\EnterpriseServiceResolver.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="NHibernate.Resolvers.PocoResolver">
+    <Position X="16.75" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAgAQAQAAAAAAAAAABAAAAAgAAAAAIAAAAAEAAAAA=</HashCode>
+      <FileName>Resolvers\PocoResolver.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="NHibernate.Criterion.CriteriaBuilder">
+    <Position X="19.75" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAJAAAAAAAAAAAAABAAAAAAAAAAIAAAAAAgA=</HashCode>
+      <FileName>Criterion\CriteriaBuilder.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="NHibernate.Reflection.PocoAccessor" BaseTypeListCollapsed="true">
+    <Position X="25.25" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>REAAAABABAAAAAAAAAAAAAAAAAAAAIIAAAACAAAAAAA=</HashCode>
+      <FileName>Reflection\PocoAccessor.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="NHibernate.Reflection.PropertyAction" BaseTypeListCollapsed="true">
+    <Position X="27.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABABEgAAAAACQIAAAAIAAAAACAAAQAAk=</HashCode>
+      <FileName>Reflection\PropertyAction.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="NHibernate.Metadata.PersistentClassInfo" BaseTypeListCollapsed="true">
+    <Position X="33" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>MAYBAAAAABAAAAAABEABAggAEAEAAAFAAAQAQgACQAA=</HashCode>
+      <FileName>Metadata\PersistentClassInfo.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="NHibernate.Metadata.PropertyMapInfo" BaseTypeListCollapsed="true">
+    <Position X="35.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAIAAQAAAAAEgAQIAEQAgAAFAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>Metadata\PropertyMapInfo.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="NHibernate.Exceptions.CriteriaBuilderException">
+    <Position X="44.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions\CriteriaBuilderException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NHibernate.Exceptions.MissingAccessorsException">
+    <Position X="46.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions\MissingAccessorsException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NHibernate.Exceptions.MissingMetadataException">
+    <Position X="39.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions\MissingMetadataException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NHibernate.Exceptions.MissingPropertyException">
+    <Position X="39.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>Exceptions\MissingPropertyException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NHibernate.Exceptions.PropertyAccessorException">
+    <Position X="41.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions\PropertyAccessorException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="NHibernate.Transform.IPocoTransformer">
+    <Position X="0.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAQAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Transform\IPocoTransformer.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="NHibernate.Transform.IPocoTransformer&lt;TSource, TDestination&gt;">
+    <Position X="0.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Transform\IPocoTransformer.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="NHibernate.Transform.IPocoTransformerResult">
+    <Position X="9" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Transform\IPocoTransformerResult.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="NHibernate.Transform.IResultTransformer">
+    <Position X="9" Y="1.5" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="NHibernate.ServiceLocator.IServiceResolver">
+    <Position X="18.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAgAAAAAAAAAAAABAgAAAAAAAAAAAIAAAAA=</HashCode>
+      <FileName>ServiceLocator\IServiceResolver.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="NHibernate.Resolvers.IPocoResolver">
+    <Position X="16.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAgAAAAAAAAAAAAAABAAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Resolvers\IPocoResolver.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="NHibernate.Criterion.ICriteriaBuilder">
+    <Position X="19.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>Criterion\ICriteriaBuilder.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="NHibernate.Reflection.IPocoAccessor">
+    <Position X="25.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BEAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAA=</HashCode>
+      <FileName>Reflection\IPocoAccessor.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="NHibernate.Reflection.IPropertyAction">
+    <Position X="27.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABABAAAAAAAAQIAAAAAAAAAACAAAAAAA=</HashCode>
+      <FileName>Reflection\IPropertyAction.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="NHibernate.Metadata.IPersistentClassInfo">
+    <Position X="33" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAABAAAAABAAAAAABEABAggAEAAAAAEAAAQAQgACQAA=</HashCode>
+      <FileName>Metadata\IPersistentClassInfo.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="NHibernate.Metadata.IPropertyInfo">
+    <Position X="35.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAIAAQAAAAAEAAQIAEQAgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Metadata\IPropertyInfo.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="NHibernate.Reflection.AccessType">
+    <Position X="23" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAAAAgAAAAAAAAEAAAA=</HashCode>
+      <FileName>Reflection\AccessType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>
