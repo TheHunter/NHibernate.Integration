@@ -31,6 +31,14 @@ namespace NHibernate.Criterion
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="instance"></param>
+        /// <param name="alias"></param>
+        /// <returns></returns>
+        DetachedCriteria MakeCriteria(object instance, string alias);
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <typeparam name="TEntity"></typeparam>
         /// <param name="instance"></param>
         /// <returns></returns>
@@ -39,9 +47,27 @@ namespace NHibernate.Criterion
         /// <summary>
         /// 
         /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <param name="instance"></param>
+        /// <param name="alias"></param>
+        /// <returns></returns>
+        DetachedCriteria MakeCriteria<TEntity>(object instance, string alias) where TEntity : class;
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="persistentClass"></param>
         /// <param name="instance"></param>
         /// <returns></returns>
         DetachedCriteria MakeCriteria(System.Type persistentClass, object instance);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="persistentClass"></param>
+        /// <param name="instance"></param>
+        /// <param name="alias"></param>
+        /// <returns></returns>
+        DetachedCriteria MakeCriteria(System.Type persistentClass, object instance, string alias);
     }
 }

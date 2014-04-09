@@ -54,7 +54,22 @@ namespace NHibernate.Criterion
             if (instance == null)
                 return null;
 
-            return BuildCriteria(instance.GetType(), instance);
+            return MakeCriteria(instance.GetType(), instance);
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="instance"></param>
+        /// <param name="alias"></param>
+        /// <returns></returns>
+        public DetachedCriteria MakeCriteria(object instance, string alias)
+        {
+            if (instance == null)
+                return null;
+
+            return MakeCriteria(instance.GetType(), instance, alias);
         }
 
         /// <summary>
@@ -72,15 +87,14 @@ namespace NHibernate.Criterion
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="persistentClass"></param>
+        /// <typeparam name="TEntity"></typeparam>
         /// <param name="instance"></param>
+        /// <param name="alias"></param>
         /// <returns></returns>
-        public DetachedCriteria MakeCriteria(System.Type persistentClass, object instance)
+        public DetachedCriteria MakeCriteria<TEntity>(object instance, string alias)
+            where TEntity : class
         {
-            if (instance == null)
-                return null;
-
-            return BuildCriteria(persistentClass, instance);
+            return MakeCriteria(typeof(TEntity), instance, alias);
         }
 
         /// <summary>
@@ -89,7 +103,37 @@ namespace NHibernate.Criterion
         /// <param name="persistentClass"></param>
         /// <param name="instance"></param>
         /// <returns></returns>
-        private DetachedCriteria BuildCriteria(System.Type persistentClass, object instance)
+        public DetachedCriteria MakeCriteria(System.Type persistentClass, object instance)
+        {
+            if (persistentClass == null)
+                return null;
+
+            return MakeCriteria(persistentClass, instance, persistentClass.Name.Lower());
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="persistentClass"></param>
+        /// <param name="instance"></param>
+        /// <param name="alias"></param>
+        /// <returns></returns>
+        public DetachedCriteria MakeCriteria(System.Type persistentClass, object instance, string alias)
+        {
+            if (instance == null || persistentClass == null || alias == null || alias.Trim().Equals(string.Empty))
+                return null;
+
+            return BuildCriteria(persistentClass, instance, alias);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="persistentClass"></param>
+        /// <param name="instance"></param>
+        /// <param name="alias"></param>
+        /// <returns></returns>
+        private DetachedCriteria BuildCriteria(System.Type persistentClass, object instance, string alias)
         {
             System.Type typeClass = persistentClass;
             IPersistentClassInfo metadataInfo = new PersistentClassInfo(metadataProvider.Invoke(typeClass));
@@ -97,7 +141,7 @@ namespace NHibernate.Criterion
             if (metadataInfo == null)
                 throw new MissingMetadataException(string.Format("No metadata info for type of <{0}>", typeClass.FullName));
 
-            string alias = typeClass.Name.ToLower();
+            //string alias = typeClass.Name.ToLower();
             DetachedCriteria root = DetachedCriteria.For(typeClass, alias);
 
             object idValue = metadataInfo.HasIdentifierProperty ? metadataInfo.GetIdentifier(instance, this.Mode) : null;

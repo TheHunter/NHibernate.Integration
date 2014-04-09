@@ -34,9 +34,6 @@
     <DocumentationFile>bin\Release\NHibernate.Integration.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DynamicMapResolver">
-      <HintPath>..\packages\DynamicMapResolver.1.2.3.6\lib\net35\DynamicMapResolver.dll</HintPath>
-    </Reference>
     <Reference Include="Iesi.Collections">
       <HintPath>..\packages\Iesi.Collections.3.2.0.4000\lib\Net35\Iesi.Collections.dll</HintPath>
     </Reference>
@@ -64,6 +61,7 @@
     <Compile Include="Metadata\PropertyMapInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reflection\AccessType.cs" />
+    <Compile Include="Reflection\HelperType.cs" />
     <Compile Include="Reflection\IPocoAccessor.cs" />
     <Compile Include="Reflection\IPropertyAction.cs" />
     <Compile Include="Reflection\PocoAccessor.cs" />

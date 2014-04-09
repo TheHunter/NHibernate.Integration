@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using NHibernate.Properties;
 using NHibernate.Reflection;
@@ -13,18 +14,38 @@ namespace NHibernate.Resolvers
 		: IPocoResolver
 	{
 
-		private readonly HashSet<IPocoTransformer> propertyTransformers;
+		//private readonly HashSet<IPocoTransformer> propertyTransformers;
+		private readonly Func<object, System.Type, object> transformer;
+
 		private readonly HashSet<IPocoAccessor> pocoAccessors;
 		private readonly IPropertyAccessor propertyAccessor;
 		private readonly HashSet<IPocoTransformerResult> pocoTransformers;
 
+		
+		//public PocoResolver(IEnumerable<IPocoTransformer> propertyTransformers)
+		//{
+		//    this.pocoTransformers = new HashSet<IPocoTransformerResult>();
+		//    this.propertyTransformers = new HashSet<IPocoTransformer>(propertyTransformers);
+		//    this.pocoAccessors = new HashSet<IPocoAccessor>();
+		//    this.propertyAccessor =
+		//        new ChainedPropertyAccessor(new[]
+		//                                        {
+		//                                            PropertyAccessorFactory.GetPropertyAccessor(null),
+		//                                            PropertyAccessorFactory.GetPropertyAccessor("field")
+		//                                        });
+		//}
+
 		/// <summary>
 		/// 
 		/// </summary>
-		public PocoResolver(IEnumerable<IPocoTransformer> propertyTransformers)
+		/// <param name="transformer"></param>
+		public PocoResolver(Func<object, System.Type, object> transformer)
 		{
+			if (transformer == null)
+				throw new ArgumentNullException("transformer", "The delegate which serves for transforming instances cannot be null.");
+
+			this.transformer = transformer;
 			this.pocoTransformers = new HashSet<IPocoTransformerResult>();
-			this.propertyTransformers = new HashSet<IPocoTransformer>(propertyTransformers);
 			this.pocoAccessors = new HashSet<IPocoAccessor>();
 			this.propertyAccessor =
 				new ChainedPropertyAccessor(new[]
@@ -48,9 +69,21 @@ namespace NHibernate.Resolvers
 			if (source == null)
 				return null;
 
-			IPocoTransformerResult transformer = this.GetTransformer<TOutput>();
+			//IPocoTransformerResult transformer = this.GetTransformer<TOutput>();
+			//return transformer.TransformInstance(source) as TOutput;
 
-			return transformer.TransformInstance(source) as TOutput;
+			return this.transformer.Invoke(source, typeof(TOutput)) as TOutput;
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <typeparam name="TOutput"></typeparam>
+		/// <returns></returns>
+		public IPocoTransformerResult GetTransformer<TOutput>()
+			where TOutput : class
+		{
+			return this.GetTransformer(typeof(TOutput));
 		}
 
 		/// <summary>
@@ -73,30 +106,21 @@ namespace NHibernate.Resolvers
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <typeparam name="TData"></typeparam>
-		/// <returns></returns>
-		public IPocoTransformerResult GetTransformer<TData>()
-			where TData : class
-		{
-			return this.GetTransformer(typeof (TData));
-		}
-
-		/// <summary>
-		/// 
-		/// </summary>
 		/// <param name="type"></param>
 		/// <param name="instance"></param>
 		/// <returns></returns>
 		public object TryToTransform(System.Type type, object instance)
 		{
-			if (type == null || instance == null)
-				return null;
+            if (type == null || instance == null)
+                return null;
 
-		    bool isNullable = type.IsGenericType && type.Name.Equals("Nullable`1") && type.GetGenericArguments().Any();
-		    IPocoTransformer resolver = propertyTransformers.FirstOrDefault(n => n.TypeTransformer == type)
-                ?? (isNullable ? propertyTransformers.FirstOrDefault(n => n.TypeTransformer == type.GetGenericArguments()[0]) : null);
+			//bool isNullable = type.IsGenericType && type.Name.Equals("Nullable`1") && type.GetGenericArguments().Any();
+			//IPocoTransformer resolver = propertyTransformers.FirstOrDefault(n => n.TypeTransformer == type)
+			//    ?? (isNullable ? propertyTransformers.FirstOrDefault(n => n.TypeTransformer == type.GetGenericArguments()[0]) : null);
 
-			return resolver == null ? null : resolver.Transform(instance);
+			//return resolver == null ? null : resolver.Transform(instance);
+			
+			return this.transformer.Invoke(instance, type);
 		}
 
 		/// <summary>

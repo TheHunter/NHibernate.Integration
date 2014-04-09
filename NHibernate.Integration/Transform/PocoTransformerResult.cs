@@ -110,35 +110,36 @@ namespace NHibernate.Transform
 			}
 		}
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="instance"></param>
-        /// <returns></returns>
-		public object TransformInstance(object instance)
-		{
-			if (instance == null) return null;
+		///// <summary>
+		///// 
+		///// </summary>
+		///// <param name="instance"></param>
+		///// <returns></returns>
+		//[Obsolete]
+		//public object TransformInstance(object instance)
+		//{
+		//    if (instance == null) return null;
 
-			int index = -1;
+		//    int index = -1;
 			
-			var accessor = this.pocoAccessorResolver.Invoke(instance.GetType());
-			if (accessor != null && accessor.PropertyActions.Any())
-			{
-				int count = accessor.PropertyActions.Count();
-				object[] values = new object[count];
-				string[] properties = new string[count];
+		//    var accessor = this.pocoAccessorResolver.Invoke(instance.GetType());
+		//    if (accessor != null && accessor.PropertyActions.Any())
+		//    {
+		//        int count = accessor.PropertyActions.Count();
+		//        object[] values = new object[count];
+		//        string[] properties = new string[count];
 
-				foreach (var property in accessor.PropertyActions)
-				{
-					index++;
-					properties[index] = property.MemberName;
-					values[index] = property.Get(instance);
-				}
-				return this.TransformTuple(values, properties);
-			}
+		//        foreach (var property in accessor.PropertyActions)
+		//        {
+		//            index++;
+		//            properties[index] = property.MemberName;
+		//            values[index] = property.Get(instance);
+		//        }
+		//        return this.TransformTuple(values, properties);
+		//    }
 
-			return null;
-		}
+		//    return null;
+		//}
 
 		/// <summary>
 		/// 

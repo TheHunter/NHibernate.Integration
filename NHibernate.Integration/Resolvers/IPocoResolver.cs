@@ -29,10 +29,10 @@ namespace NHibernate.Resolvers
         /// <summary>
         /// 
         /// </summary>
-        /// <typeparam name="TData"></typeparam>
+        /// <typeparam name="TOutput"></typeparam>
         /// <returns></returns>
-        IPocoTransformerResult GetTransformer<TData>()
-            where TData : class;
+        IPocoTransformerResult GetTransformer<TOutput>()
+            where TOutput : class;
 
         /// <summary>
         /// 
