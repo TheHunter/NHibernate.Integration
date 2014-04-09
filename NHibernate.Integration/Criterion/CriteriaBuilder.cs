@@ -108,7 +108,7 @@ namespace NHibernate.Criterion
             if (persistentClass == null)
                 return null;
 
-            return MakeCriteria(persistentClass, instance, persistentClass.Name.Lower());
+            return MakeCriteria(persistentClass, instance, persistentClass.Name.ToLower());
         }
 
         /// <summary>
