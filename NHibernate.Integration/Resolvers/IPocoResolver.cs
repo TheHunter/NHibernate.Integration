@@ -1,4 +1,5 @@
-﻿using NHibernate.Reflection;
+﻿using System;
+using NHibernate.Reflection;
 using NHibernate.Transform;
 
 namespace NHibernate.Resolvers

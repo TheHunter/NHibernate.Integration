@@ -70,7 +70,7 @@ namespace NHibernate.Transform
 		public object TransformTuple(object[] tuple, string[] aliases)
 		{
 			if (aliases == null)
-				throw new ArgumentNullException("aliases");
+                throw new ArgumentNullException("aliases", "aliases cannot be null.");
 
 			try
 			{
@@ -109,37 +109,6 @@ namespace NHibernate.Transform
 				throw new HibernateException(string.Format("Error on initializing the instance, class: {0}: ", resultType.FullName), ex);
 			}
 		}
-
-		///// <summary>
-		///// 
-		///// </summary>
-		///// <param name="instance"></param>
-		///// <returns></returns>
-		//[Obsolete]
-		//public object TransformInstance(object instance)
-		//{
-		//    if (instance == null) return null;
-
-		//    int index = -1;
-			
-		//    var accessor = this.pocoAccessorResolver.Invoke(instance.GetType());
-		//    if (accessor != null && accessor.PropertyActions.Any())
-		//    {
-		//        int count = accessor.PropertyActions.Count();
-		//        object[] values = new object[count];
-		//        string[] properties = new string[count];
-
-		//        foreach (var property in accessor.PropertyActions)
-		//        {
-		//            index++;
-		//            properties[index] = property.MemberName;
-		//            values[index] = property.Get(instance);
-		//        }
-		//        return this.TransformTuple(values, properties);
-		//    }
-
-		//    return null;
-		//}
 
 		/// <summary>
 		/// 

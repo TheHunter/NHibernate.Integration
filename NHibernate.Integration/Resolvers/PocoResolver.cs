@@ -13,27 +13,10 @@ namespace NHibernate.Resolvers
 	public class PocoResolver
 		: IPocoResolver
 	{
-
-		//private readonly HashSet<IPocoTransformer> propertyTransformers;
 		private readonly Func<object, System.Type, object> transformer;
-
 		private readonly HashSet<IPocoAccessor> pocoAccessors;
 		private readonly IPropertyAccessor propertyAccessor;
 		private readonly HashSet<IPocoTransformerResult> pocoTransformers;
-
-		
-		//public PocoResolver(IEnumerable<IPocoTransformer> propertyTransformers)
-		//{
-		//    this.pocoTransformers = new HashSet<IPocoTransformerResult>();
-		//    this.propertyTransformers = new HashSet<IPocoTransformer>(propertyTransformers);
-		//    this.pocoAccessors = new HashSet<IPocoAccessor>();
-		//    this.propertyAccessor =
-		//        new ChainedPropertyAccessor(new[]
-		//                                        {
-		//                                            PropertyAccessorFactory.GetPropertyAccessor(null),
-		//                                            PropertyAccessorFactory.GetPropertyAccessor("field")
-		//                                        });
-		//}
 
 		/// <summary>
 		/// 
@@ -68,9 +51,6 @@ namespace NHibernate.Resolvers
 		{
 			if (source == null)
 				return null;
-
-			//IPocoTransformerResult transformer = this.GetTransformer<TOutput>();
-			//return transformer.TransformInstance(source) as TOutput;
 
 			return this.transformer.Invoke(source, typeof(TOutput)) as TOutput;
 		}
@@ -113,12 +93,6 @@ namespace NHibernate.Resolvers
 		{
             if (type == null || instance == null)
                 return null;
-
-			//bool isNullable = type.IsGenericType && type.Name.Equals("Nullable`1") && type.GetGenericArguments().Any();
-			//IPocoTransformer resolver = propertyTransformers.FirstOrDefault(n => n.TypeTransformer == type)
-			//    ?? (isNullable ? propertyTransformers.FirstOrDefault(n => n.TypeTransformer == type.GetGenericArguments()[0]) : null);
-
-			//return resolver == null ? null : resolver.Transform(instance);
 			
 			return this.transformer.Invoke(instance, type);
 		}
