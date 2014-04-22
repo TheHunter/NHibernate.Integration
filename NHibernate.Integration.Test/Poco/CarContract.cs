@@ -16,6 +16,22 @@ namespace TheHunter.Domain
         /// <summary>
         /// 
         /// </summary>
+        public CarContract()
+        {
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        public CarContract(long? id)
+            :base(id)
+        {
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public virtual string BrandName
         {
             get { return this.brandName; }

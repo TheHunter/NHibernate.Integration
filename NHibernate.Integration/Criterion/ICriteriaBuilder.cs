@@ -26,7 +26,7 @@ namespace NHibernate.Criterion
         /// </summary>
         /// <param name="instance"></param>
         /// <returns></returns>
-        DetachedCriteria MakeCriteria(object instance);
+        ICriteriaCompiled MakeCriteria(object instance);
 
         /// <summary>
         /// 
@@ -34,7 +34,7 @@ namespace NHibernate.Criterion
         /// <param name="instance"></param>
         /// <param name="alias"></param>
         /// <returns></returns>
-        DetachedCriteria MakeCriteria(object instance, string alias);
+        ICriteriaCompiled MakeCriteria(object instance, string alias);
 
         /// <summary>
         /// 
@@ -42,7 +42,7 @@ namespace NHibernate.Criterion
         /// <typeparam name="TEntity"></typeparam>
         /// <param name="instance"></param>
         /// <returns></returns>
-        DetachedCriteria MakeCriteria<TEntity>(object instance) where TEntity : class;
+        ICriteriaCompiled MakeCriteria<TEntity>(TEntity instance) where TEntity : class;
 
         /// <summary>
         /// 
@@ -51,7 +51,7 @@ namespace NHibernate.Criterion
         /// <param name="instance"></param>
         /// <param name="alias"></param>
         /// <returns></returns>
-        DetachedCriteria MakeCriteria<TEntity>(object instance, string alias) where TEntity : class;
+        ICriteriaCompiled MakeCriteria<TEntity>(TEntity instance, string alias) where TEntity : class;
 
         /// <summary>
         /// 
@@ -59,7 +59,7 @@ namespace NHibernate.Criterion
         /// <param name="persistentClass"></param>
         /// <param name="instance"></param>
         /// <returns></returns>
-        DetachedCriteria MakeCriteria(System.Type persistentClass, object instance);
+        ICriteriaCompiled MakeCriteria(System.Type persistentClass, object instance);
 
         /// <summary>
         /// 
@@ -68,6 +68,6 @@ namespace NHibernate.Criterion
         /// <param name="instance"></param>
         /// <param name="alias"></param>
         /// <returns></returns>
-        DetachedCriteria MakeCriteria(System.Type persistentClass, object instance, string alias);
+        ICriteriaCompiled MakeCriteria(System.Type persistentClass, object instance, string alias);
     }
 }

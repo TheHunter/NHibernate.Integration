@@ -16,6 +16,22 @@ namespace TheHunter.Domain
         /// <summary>
         /// 
         /// </summary>
+        public HomeContract()
+        {
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        public HomeContract(long? id)
+            :base(id)
+        {
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public virtual string Town
         {
             get { return this.town; }

@@ -15,6 +15,15 @@ namespace TheHunter.Domain
         private DateTime? beginDate = null;
         private int? price;
 
+        protected TradeContract()
+        {
+        }
+
+        protected TradeContract(long? id)
+            :base(id)
+        {
+        }
+
         public virtual long? Number
         {
             set { this.number = value; }

@@ -69,7 +69,7 @@ namespace NHibernate.Criterion
         /// </summary>
         /// <param name="instance"></param>
         /// <returns></returns>
-        public DetachedCriteria MakeCriteria(object instance)
+        public ICriteriaCompiled MakeCriteria(object instance)
         {
             if (instance == null)
                 return null;
@@ -84,7 +84,7 @@ namespace NHibernate.Criterion
         /// <param name="instance"></param>
         /// <param name="alias"></param>
         /// <returns></returns>
-        public DetachedCriteria MakeCriteria(object instance, string alias)
+        public ICriteriaCompiled MakeCriteria(object instance, string alias)
         {
             if (instance == null)
                 return null;
@@ -98,7 +98,7 @@ namespace NHibernate.Criterion
         /// <typeparam name="TEntity"></typeparam>
         /// <param name="instance"></param>
         /// <returns></returns>
-        public DetachedCriteria MakeCriteria<TEntity>(object instance)
+        public ICriteriaCompiled MakeCriteria<TEntity>(TEntity instance)
             where TEntity : class
         {
             return MakeCriteria(typeof(TEntity), instance);
@@ -111,7 +111,7 @@ namespace NHibernate.Criterion
         /// <param name="instance"></param>
         /// <param name="alias"></param>
         /// <returns></returns>
-        public DetachedCriteria MakeCriteria<TEntity>(object instance, string alias)
+        public ICriteriaCompiled MakeCriteria<TEntity>(TEntity instance, string alias)
             where TEntity : class
         {
             return MakeCriteria(typeof(TEntity), instance, alias);
@@ -123,7 +123,7 @@ namespace NHibernate.Criterion
         /// <param name="persistentClass"></param>
         /// <param name="instance"></param>
         /// <returns></returns>
-        public DetachedCriteria MakeCriteria(System.Type persistentClass, object instance)
+        public ICriteriaCompiled MakeCriteria(System.Type persistentClass, object instance)
         {
             if (persistentClass == null)
                 return null;
@@ -138,7 +138,7 @@ namespace NHibernate.Criterion
         /// <param name="instance"></param>
         /// <param name="alias"></param>
         /// <returns></returns>
-        public DetachedCriteria MakeCriteria(System.Type persistentClass, object instance, string alias)
+        public ICriteriaCompiled MakeCriteria(System.Type persistentClass, object instance, string alias)
         {
             if (instance == null || persistentClass == null || alias == null || alias.Trim().Equals(string.Empty))
                 return null;
@@ -146,79 +146,17 @@ namespace NHibernate.Criterion
             return BuildCriteria(persistentClass, instance, alias);
         }
 
-        
-        private DetachedCriteria BuildCriteria(System.Type persistentClass, object instance, string alias)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="persistentClass"></param>
+        /// <param name="instance"></param>
+        /// <param name="alias"></param>
+        /// <returns></returns>
+        private ICriteriaCompiled BuildCriteria(System.Type persistentClass, object instance, string alias)
         {
-            //System.Type typeClass = persistentClass;
-            //IPersistentClassInfo metadataInfo = new PersistentClassInfo(metadataProvider.Invoke(typeClass));
-
-            //if (metadataInfo == null)
-            //    throw new MissingMetadataException(string.Format("No metadata info for type of <{0}>", typeClass.FullName));
-
-            ////string alias = typeClass.Name.ToLower();
-            //DetachedCriteria root = DetachedCriteria.For(typeClass, alias);
-
-            //object idValue = metadataInfo.HasIdentifierProperty ? metadataInfo.GetIdentifier(instance, this.Mode) : null;
-            ////object idValue = null;
-
-            //if (idValue != null)
-            //{
-            //    root.Add(Restrictions.IdEq(idValue));
-            //}
-            //else
-            //{
-            //    var propertiesToExclude = new List<IPropertyInfo>(metadataInfo.Properties.Where(n => n.IsAssociationType))
-            //        {
-            //            metadataInfo.Identifier
-            //        };
-
-            //    var propertiesAssociation = new List<IPropertyInfo>(metadataInfo.Properties.Where(n => n.IsAssociationType && !n.IsCollectionType));
-
-            //    Example ex = Example.Create(instance)
-            //                        .ExcludeNulls()
-            //                        .EnableLike(this.likeMode)
-            //                        ;
-
-            //    propertiesToExclude.ForEach(n => ex.ExcludeProperty(n.Name));
-            //    root.Add(ex);
-
-            //    foreach (var propertyInfo in propertiesAssociation)
-            //    {
-            //        AddCriterion(root, alias, propertyInfo,
-            //                     metadataInfo.GetPropertyValue(instance, propertyInfo.Name, this.Mode));
-            //    }
-
-            //}
-            //return root;
-
-            CriteriaCompiled criteria = new CriteriaCompiled(alias, persistentClass, this.likeMode, this.Mode, instance, this.GetClassInfo);
-            return criteria.Criteria;
-
+            return new CriteriaCompiled(alias, persistentClass, this.likeMode, this.Mode, instance, this.GetClassInfo);
         }
 
-        
-        //private void AddCriterion(DetachedCriteria root, string rootAlias, IPropertyInfo property, object instance)
-        //{
-        //    if (instance == null)
-        //        return;
-
-        //    System.Type typeClass = instance.GetType();
-        //    IPersistentClassInfo metadataInfo = new PersistentClassInfo(metadataProvider.Invoke(typeClass));
-
-        //    if (metadataInfo == null)
-        //        throw new MissingMetadataException(string.Format("No metadata info for type of <{0}>", typeClass.FullName));
-
-        //    object idValue = metadataInfo.HasIdentifierProperty ? metadataInfo.GetIdentifier(instance, this.Mode) : null;
-
-        //    ICriterion criterion = idValue != null
-        //                            ? Restrictions.IdEq(idValue)
-        //                            : Example.Create(instance)
-        //                                     .ExcludeNulls()
-        //                                     .EnableLike(this.likeMode)
-        //                                     ;
-
-        //    root.CreateAlias(string.Format("{0}.{1}", rootAlias, property.Name), typeClass.Name.ToLower(), JoinType.InnerJoin, criterion);
-
-        //}
     }
 }

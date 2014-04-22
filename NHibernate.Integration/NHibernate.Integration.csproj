@@ -70,8 +70,6 @@
     <Compile Include="Reflection\PropertyAction.cs" />
     <Compile Include="Resolvers\IPocoResolver.cs" />
     <Compile Include="Resolvers\PocoResolver.cs" />
-    <Compile Include="ServiceLocator\EnterpriseServiceResolver.cs" />
-    <Compile Include="ServiceLocator\IServiceResolver.cs" />
     <Compile Include="Transform\IPocoTransformerResult.cs" />
     <Compile Include="Transform\PocoTransformerResult.cs" />
   </ItemGroup>

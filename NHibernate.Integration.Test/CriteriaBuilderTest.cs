@@ -24,28 +24,112 @@ namespace NHibernate.Integration.Test
             var criteria2 = criteriaBuilder.MakeCriteria((object)null, (string)null);
             Assert.IsNull(criteria2);
 
-            var criteria3 = criteriaBuilder.MakeCriteria<Salesman>((object)null);
+            var criteria3 = criteriaBuilder.MakeCriteria<Salesman>(null);
             Assert.IsNull(criteria3);
 
-            var criteria4 = criteriaBuilder.MakeCriteria<Salesman>((object)null, null);
+            var criteria4 = criteriaBuilder.MakeCriteria<Salesman>(null, null);
             Assert.IsNull(criteria4);
-
             
-
         }
 
         [Test]
         public void TestCriteriaCompiled()
         {
             ICriteriaBuilder criteriaBuilder = new CriteriaBuilder(SessionFactory.GetClassMetadata);
-            Salesman salesman = new Salesman(1);
+            Salesman instance = new Salesman(1);
 
-            DetachedCriteria criteria = criteriaBuilder.MakeCriteria<Salesman>(salesman);
+            ICriteriaCompiled criteriaCompiled = null;
 
+            criteriaCompiled = criteriaBuilder.MakeCriteria(instance as object);
+            Assert.AreEqual(criteriaCompiled.Alias, "salesman");
+            Assert.AreEqual(criteriaCompiled.Restrictions.Count(), 1);
             using (ISession session = SessionFactory.OpenSession())
             {
-                var lista = criteria.GetExecutableCriteria(session).List();
+                var lista = criteriaCompiled.Criteria.GetExecutableCriteria(session).List();
                 Assert.IsTrue(lista.Count == 1);
+            }
+
+            criteriaCompiled = criteriaBuilder.MakeCriteria(instance as object, "sal");
+            Assert.AreEqual(criteriaCompiled.Alias, "sal");
+            Assert.AreEqual(criteriaCompiled.Restrictions.Count(), 1);
+            using (ISession session = SessionFactory.OpenSession())
+            {
+                var lista = criteriaCompiled.Criteria.GetExecutableCriteria(session).List();
+                Assert.IsTrue(lista.Count == 1);
+            }
+
+            criteriaCompiled = criteriaBuilder.MakeCriteria(instance);
+            Assert.AreEqual(criteriaCompiled.Alias, "salesman");
+            Assert.AreEqual(criteriaCompiled.Restrictions.Count(), 1);
+            using (ISession session = SessionFactory.OpenSession())
+            {
+                var lista = criteriaCompiled.Criteria.GetExecutableCriteria(session).List();
+                Assert.IsTrue(lista.Count == 1);
+            }
+
+            criteriaCompiled = criteriaBuilder.MakeCriteria(instance, "sal");
+            Assert.AreEqual(criteriaCompiled.Alias, "sal");
+            Assert.AreEqual(criteriaCompiled.Restrictions.Count(), 1);
+            using (ISession session = SessionFactory.OpenSession())
+            {
+                var lista = criteriaCompiled.Criteria.GetExecutableCriteria(session).List();
+                Assert.IsTrue(lista.Count == 1);
+            }
+
+            criteriaCompiled = criteriaBuilder.MakeCriteria(typeof(Salesman), instance);
+            Assert.AreEqual(criteriaCompiled.Alias, "salesman");
+            Assert.AreEqual(criteriaCompiled.Restrictions.Count(), 1);
+            using (ISession session = SessionFactory.OpenSession())
+            {
+                var lista = criteriaCompiled.Criteria.GetExecutableCriteria(session).List();
+                Assert.IsTrue(lista.Count == 1);
+            }
+
+            criteriaCompiled = criteriaBuilder.MakeCriteria(typeof(Salesman), instance, "sal");
+            Assert.AreEqual(criteriaCompiled.Alias, "sal");
+            Assert.AreEqual(criteriaCompiled.Restrictions.Count(), 1);
+            using (ISession session = SessionFactory.OpenSession())
+            {
+                var lista = criteriaCompiled.Criteria.GetExecutableCriteria(session).List();
+                Assert.IsTrue(lista.Count == 1);
+            }
+        }
+
+        [Test]
+        public void TestCriteriaCompiled2()
+        {
+            ICriteriaCompiled criteriaCompiled = null;
+            ICriteriaBuilder criteriaBuilder = new CriteriaBuilder(SessionFactory.GetClassMetadata);
+            CarContract instance = new CarContract
+                {
+                    Owner = new Salesman(1)
+                };
+
+            criteriaCompiled = criteriaBuilder.MakeCriteria(instance);
+            Assert.AreEqual(criteriaCompiled.Alias, "carcontract");
+            Assert.AreEqual(criteriaCompiled.Restrictions.Count(), 1);
+            using (ISession session = SessionFactory.OpenSession())
+            {
+                var lista = criteriaCompiled.Criteria.GetExecutableCriteria(session).List();
+                Assert.AreEqual(lista.Count, 4);
+            }
+
+            criteriaCompiled = criteriaBuilder.MakeCriteria(typeof(CarContract), instance);
+            Assert.AreEqual(criteriaCompiled.Alias, "carcontract");
+            Assert.AreEqual(criteriaCompiled.Restrictions.Count(), 1);
+            using (ISession session = SessionFactory.OpenSession())
+            {
+                var lista = criteriaCompiled.Criteria.GetExecutableCriteria(session).List();
+                Assert.AreEqual(lista.Count, 4);
+            }
+
+            criteriaCompiled = criteriaBuilder.MakeCriteria<TradeContract>(instance);
+            Assert.AreEqual(criteriaCompiled.Alias, "tradecontract");
+            Assert.AreEqual(criteriaCompiled.Restrictions.Count(), 1);
+            using (ISession session = SessionFactory.OpenSession())
+            {
+                var lista = criteriaCompiled.Criteria.GetExecutableCriteria(session).List();
+                Assert.AreEqual(lista.Count, 10);
             }
         }
     }
