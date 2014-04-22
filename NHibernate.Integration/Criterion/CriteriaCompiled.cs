@@ -191,15 +191,28 @@ namespace NHibernate.Criterion
             if (metadataInfo == null)
                 throw new MissingMetadataException(string.Format("No metadata info for type of <{0}>", typeClass.FullName));
 
-            object idValue = metadataInfo.HasIdentifierProperty ? metadataInfo.GetIdentifier(instance, this.entityMode) : null;
+            object idValue = metadataInfo.HasIdentifierProperty
+                                 ? metadataInfo.GetIdentifier(propertyValue, this.entityMode)
+                                 : null;
 
-            ICriterion criterion = idValue != null
-                                    ? Criterion.Restrictions.IdEq(idValue)
-                                    : Example.Create(instance)
-                                             .ExcludeNulls()
-                                             .EnableLike(this.MatchMode)
-                                             ;
+            ICriterion criterion = null;
+            if (idValue != null)
+            {
+                criterion = Criterion.Restrictions.IdEq(idValue);
+            }
+            else
+            {
+                Example ex = Example.Create(propertyValue)
+                                   .ExcludeNulls()
+                                   .EnableLike(this.matchMode);
 
+                if (metadataInfo.Identifier != null)
+                    ex.ExcludeProperty(metadataInfo.Identifier.Name);
+
+                criterion = ex;
+            }
+
+            this.restrictions.Add(criterion);
             this.criteria.CreateAlias(string.Format("{0}.{1}", this.alias, propertyName), typeClass.Name.ToLower(), JoinType.InnerJoin, criterion);
         }
     }
