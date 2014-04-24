@@ -16,7 +16,7 @@ namespace NHibernate.Integration.Test
     [TestFixture]
     public class NhTestBase
     {
-        static ISessionFactory sessionFactory;
+        private ISessionFactory sessionFactory;
         private static string rootPath;
 
         [TestFixtureSetUp]
@@ -34,9 +34,18 @@ namespace NHibernate.Integration.Test
             string strConnection = string.Format(ConfigurationManager.ConnectionStrings["dbc2"].ConnectionString, rootPath);
             cfg.SetProperty("connection.connection_string", strConnection);
 
+            if (BeforeBuilding != null)
+                this.BeforeBuilding.Invoke(cfg);
+            
+
             sessionFactory = cfg.BuildSessionFactory();
 
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        protected Action<Configuration> BeforeBuilding { get; set; }
 
         /// <summary>
         /// 

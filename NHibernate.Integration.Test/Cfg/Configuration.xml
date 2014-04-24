@@ -4,12 +4,12 @@
     <property name="connection.provider">
       NHibernate.Connection.DriverConnectionProvider
     </property>
-    <!--<property name="dialect">
-      NHibernate.Dialect.MsSql2008Dialect
-    </property>-->
     <property name="dialect">
-        NHibernate.Dialect.AdvancedSqlDialect, NHibernate.Integration.Test
+      NHibernate.Dialect.MsSql2005Dialect
     </property>
+    <!--<property name="dialect">
+        NHibernate.Dialect.AdvancedSqlDialect, NHibernate.Integration.Test
+    </property>-->
     <property name="connection.driver_class">
       NHibernate.Driver.SqlClientDriver
     </property>
