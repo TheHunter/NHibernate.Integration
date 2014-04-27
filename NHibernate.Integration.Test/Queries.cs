@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using NHibernate.Cfg;
 using NHibernate.Dialect.Function;
+using NHibernate.Hql.Ast.ANTLR;
 using NHibernate.Linq;
 using NUnit.Framework;
 using TheHunter.Domain;
@@ -58,7 +59,6 @@ namespace NHibernate.Integration.Test
         {
             using (ISession session = SessionFactory.OpenSession())
             {
-                //var query = session.CreateQuery("select checksum(sal.Name) hashColumn from Salesman sal");
                 var query = session.CreateQuery("from Salesman sal");
 
                 var lista = query.List();
@@ -79,13 +79,13 @@ namespace NHibernate.Integration.Test
                 Assert.IsNotNull(lista);
             }
         }
-
         
-        //[Test]
         /// <summary>
-        /// throws QuerySyntaxException
+        /// throws QuerySyntaxException, this is a bug which Nhibernate team could fix on the future..
         /// </summary>
+        [Test]
         [Category("Hql Queries")]
+        [ExpectedException(typeof(QuerySyntaxException))]
         public void Test5()
         {
             using (ISession session = SessionFactory.OpenSession())
@@ -97,27 +97,30 @@ namespace NHibernate.Integration.Test
             }
         }
 
-        //[Test]
         /// <summary>
-        /// throws QuerySyntaxException
+        /// With my custom function( counter() ) this test doesn't fail, but I don't understand Why this happens,
+        /// because my custom function It's almost identical than nhibernate count() function.
         /// </summary>
+        [Test]
         [Category("Hql Queries")]
         public void Test6()
         {
             using (ISession session = SessionFactory.OpenSession())
             {
-                var query = session.CreateQuery("select counter(concat(sal.Name, sal.Surname)) as total from Salesman sal");
+                var query = session.CreateQuery("select counter(checksum(sal.Name, sal.Surname)) as total from Salesman sal");
 
                 dynamic counter = query.UniqueResult();
                 Assert.IsTrue(counter > 0);
             }
         }
 
-        //[Test]
         /// <summary>
-        /// throws QuerySyntaxException
+        /// Using an aggregation function with the distinct keyword and an any kind of scalar function as parameter
+        /// throws an exception... this is a bug which I hope it will be fixed.
         /// </summary>
+        [Test]
         [Category("Hql Queries")]
+        [ExpectedException(typeof(QuerySyntaxException))]
         public void Test7()
         {
             using (ISession session = SessionFactory.OpenSession())
@@ -129,34 +132,16 @@ namespace NHibernate.Integration.Test
             }
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
         [Test]
         [Category("Hql Queries")]
         public void Test8()
         {
             using (ISession session = SessionFactory.OpenSession())
             {
-                var query = session.CreateQuery("select counter(checksum(sal.Name)) as total from Salesman sal");
-
-                dynamic counter = query.UniqueResult();
-                Assert.IsTrue(counter > 0);
-            }
-        }
-
-        /// <summary>
-        /// The Test8 is equals to this one, but the unique difference is to return type.
-        /// The original error is thrown by HqlParser.cs file, see the method HqlParser.selectFrom_return selectFrom() on calling input.LA(1);
-        /// </summary>
-        //[Test]
-        /// <summary>
-        /// throws QuerySyntaxException
-        /// </summary>
-        [Category("Hql Queries")]
-        public void Test9()
-        {
-            using (ISession session = SessionFactory.OpenSession())
-            {
-                var query = session.CreateQuery("select count(checksum(sal.Name)) as total from Salesman sal");
+                var query = session.CreateQuery("select counter(concat(sal.Name, sal.Surname)) as total from Salesman sal");
 
                 dynamic counter = query.UniqueResult();
                 Assert.IsTrue(counter > 0);
@@ -165,7 +150,7 @@ namespace NHibernate.Integration.Test
 
         [Test]
         [Category("Hql Queries")]
-        public void Test10()
+        public void Test9()
         {
             using (ISession session = SessionFactory.OpenSession())
             {
@@ -173,22 +158,6 @@ namespace NHibernate.Integration.Test
 
                 var list = query.List();
                 Assert.IsTrue(list.Count > 0);
-            }
-        }
-
-        //[Test]
-        /// <summary>
-        /// throws QuerySyntaxException
-        /// </summary>
-        [Category("Hql Queries")]
-        public void Test_Bug()
-        {
-            using (ISession session = SessionFactory.OpenSession())
-            {
-                var query = session.CreateQuery("select count(sal.Name + sal.Surname) as chkName from Salesman sal");
-
-                long count = query.UniqueResult<long>();
-                Assert.Greater(count, 0);
             }
         }
 
@@ -204,6 +173,75 @@ namespace NHibernate.Integration.Test
                 Assert.IsNotNull(lista);
 
             }
+        }
+
+        [Test]
+        [ExpectedException(typeof(ObjectDisposedException))]
+        public void TestNh1()
+        {
+            ISession session = SessionFactory.OpenSession();
+            using (session)
+            {
+                var result = session.CreateQuery("from Salesman")
+                    .List<Salesman>();
+
+                Assert.IsNotNull(result);
+            }
+
+            session.BeginTransaction();
+        }
+
+
+        [Test]
+        [ExpectedException(typeof(ObjectDisposedException))]
+        public void TestNh2()
+        {
+            ISession session = SessionFactory.OpenSession();
+
+            var tran = session.BeginTransaction();
+            tran.Commit();
+            tran.Commit();              /* throws ObjectDisposedException */
+        }
+
+
+        [Test]
+        [ExpectedException(typeof(ObjectDisposedException))]
+        public void TestNh3()
+        {
+            ISession session = SessionFactory.OpenSession();
+
+            var tran = session.BeginTransaction();
+            tran.Commit();
+            tran.Rollback();            /* throws ObjectDisposedException */
+        }
+
+
+        [Test]
+        [ExpectedException(typeof(ObjectDisposedException))]
+        public void TestNh4()
+        {
+            ISession session = SessionFactory.OpenSession();
+            using (session)
+            {
+                
+            }
+         
+            var tran = session.Transaction;
+            tran.Commit();                          /* throws ObjectDisposedException */
+        }
+
+        [Test]
+        public void EqualsSessions()
+        {
+            ISession session1 = SessionFactory.OpenSession();
+            ISession session2 = SessionFactory.OpenSession();
+
+            Assert.AreNotEqual(session1, session2);
+
+            ISession session3 = SessionFactory.OpenSession();
+            ISession session4 = session3.GetSession(EntityMode.Poco);
+            Assert.AreNotEqual(session3, session4);
+
         }
     }
 }
