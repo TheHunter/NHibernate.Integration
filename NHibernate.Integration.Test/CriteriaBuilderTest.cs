@@ -42,7 +42,7 @@ namespace NHibernate.Integration.Test
             ICriteriaCompiled criteriaCompiled = null;
 
             criteriaCompiled = criteriaBuilder.MakeCriteria(instance as object);
-            Assert.AreEqual(criteriaCompiled.Alias, "salesman");
+            Assert.AreEqual(criteriaCompiled.RootAlias, "salesman");
             Assert.AreEqual(criteriaCompiled.Restrictions.Count(), 1);
             using (ISession session = SessionFactory.OpenSession())
             {
@@ -51,7 +51,7 @@ namespace NHibernate.Integration.Test
             }
 
             criteriaCompiled = criteriaBuilder.MakeCriteria(instance as object, "sal");
-            Assert.AreEqual(criteriaCompiled.Alias, "sal");
+            Assert.AreEqual(criteriaCompiled.RootAlias, "sal");
             Assert.AreEqual(criteriaCompiled.Restrictions.Count(), 1);
             using (ISession session = SessionFactory.OpenSession())
             {
@@ -60,7 +60,7 @@ namespace NHibernate.Integration.Test
             }
 
             criteriaCompiled = criteriaBuilder.MakeCriteria(instance);
-            Assert.AreEqual(criteriaCompiled.Alias, "salesman");
+            Assert.AreEqual(criteriaCompiled.RootAlias, "salesman");
             Assert.AreEqual(criteriaCompiled.Restrictions.Count(), 1);
             using (ISession session = SessionFactory.OpenSession())
             {
@@ -69,7 +69,7 @@ namespace NHibernate.Integration.Test
             }
 
             criteriaCompiled = criteriaBuilder.MakeCriteria(instance, "sal");
-            Assert.AreEqual(criteriaCompiled.Alias, "sal");
+            Assert.AreEqual(criteriaCompiled.RootAlias, "sal");
             Assert.AreEqual(criteriaCompiled.Restrictions.Count(), 1);
             using (ISession session = SessionFactory.OpenSession())
             {
@@ -78,7 +78,7 @@ namespace NHibernate.Integration.Test
             }
 
             criteriaCompiled = criteriaBuilder.MakeCriteria(typeof(Salesman), instance);
-            Assert.AreEqual(criteriaCompiled.Alias, "salesman");
+            Assert.AreEqual(criteriaCompiled.RootAlias, "salesman");
             Assert.AreEqual(criteriaCompiled.Restrictions.Count(), 1);
             using (ISession session = SessionFactory.OpenSession())
             {
@@ -87,7 +87,7 @@ namespace NHibernate.Integration.Test
             }
 
             criteriaCompiled = criteriaBuilder.MakeCriteria(typeof(Salesman), instance, "sal");
-            Assert.AreEqual(criteriaCompiled.Alias, "sal");
+            Assert.AreEqual(criteriaCompiled.RootAlias, "sal");
             Assert.AreEqual(criteriaCompiled.Restrictions.Count(), 1);
             using (ISession session = SessionFactory.OpenSession())
             {
@@ -107,7 +107,7 @@ namespace NHibernate.Integration.Test
                 };
 
             criteriaCompiled = criteriaBuilder.MakeCriteria(instance);
-            Assert.AreEqual(criteriaCompiled.Alias, "carcontract");
+            Assert.AreEqual(criteriaCompiled.RootAlias, "carcontract");
             Assert.AreEqual(criteriaCompiled.Restrictions.Count(), 2);
             using (ISession session = SessionFactory.OpenSession())
             {
@@ -116,7 +116,7 @@ namespace NHibernate.Integration.Test
             }
 
             criteriaCompiled = criteriaBuilder.MakeCriteria(typeof(CarContract), instance);
-            Assert.AreEqual(criteriaCompiled.Alias, "carcontract");
+            Assert.AreEqual(criteriaCompiled.RootAlias, "carcontract");
             Assert.AreEqual(criteriaCompiled.Restrictions.Count(), 2);
             using (ISession session = SessionFactory.OpenSession())
             {
@@ -125,7 +125,7 @@ namespace NHibernate.Integration.Test
             }
 
             criteriaCompiled = criteriaBuilder.MakeCriteria<TradeContract>(instance);
-            Assert.AreEqual(criteriaCompiled.Alias, "tradecontract");
+            Assert.AreEqual(criteriaCompiled.RootAlias, "tradecontract");
             Assert.AreEqual(criteriaCompiled.Restrictions.Count(), 2);
             using (ISession session = SessionFactory.OpenSession())
             {
@@ -153,7 +153,7 @@ namespace NHibernate.Integration.Test
             };
 
             criteriaCompiled = criteriaBuilder.MakeCriteria(instance);
-            Assert.AreEqual(criteriaCompiled.Alias, "carcontract");
+            Assert.AreEqual(criteriaCompiled.RootAlias, "carcontract");
             Assert.AreEqual(criteriaCompiled.Restrictions.Count(), 2);
             using (ISession session = SessionFactory.OpenSession())
             {
@@ -164,7 +164,7 @@ namespace NHibernate.Integration.Test
 
             instance.Owner = new Salesman(0);
             criteriaCompiled = criteriaBuilder.MakeCriteria(instance);
-            Assert.AreEqual(criteriaCompiled.Alias, "carcontract");
+            Assert.AreEqual(criteriaCompiled.RootAlias, "carcontract");
             Assert.AreEqual(criteriaCompiled.Restrictions.Count(), 2);
             using (ISession session = SessionFactory.OpenSession())
             {
@@ -175,7 +175,7 @@ namespace NHibernate.Integration.Test
 
             instance.Owner = new Salesman{Name = "pippo"};
             criteriaCompiled = criteriaBuilder.MakeCriteria(instance);
-            Assert.AreEqual(criteriaCompiled.Alias, "carcontract");
+            Assert.AreEqual(criteriaCompiled.RootAlias, "carcontract");
             Assert.AreEqual(criteriaCompiled.Restrictions.Count(), 2);
             using (ISession session = SessionFactory.OpenSession())
             {

@@ -191,7 +191,6 @@ namespace NHibernate.Integration.Test
             session.BeginTransaction();
         }
 
-
         [Test]
         [ExpectedException(typeof(ObjectDisposedException))]
         public void TestNh2()
@@ -202,7 +201,6 @@ namespace NHibernate.Integration.Test
             tran.Commit();
             tran.Commit();              /* throws ObjectDisposedException */
         }
-
 
         [Test]
         [ExpectedException(typeof(ObjectDisposedException))]
@@ -215,9 +213,8 @@ namespace NHibernate.Integration.Test
             tran.Rollback();            /* throws ObjectDisposedException */
         }
 
-
         [Test]
-        [ExpectedException(typeof(ObjectDisposedException))]
+        [ExpectedException(typeof(TransactionException))]
         public void TestNh4()
         {
             ISession session = SessionFactory.OpenSession();
@@ -243,5 +240,39 @@ namespace NHibernate.Integration.Test
             Assert.AreNotEqual(session3, session4);
 
         }
+
+        [Test]
+        [ExpectedException(typeof(ObjectDisposedException))]
+        public void FailedTransactionAfterDispose()
+        {
+            ISession session1 = SessionFactory.OpenSession();
+            var tran = session1.BeginTransaction();
+            session1.Dispose();
+
+            Assert.IsFalse(tran.IsActive);
+            Assert.IsFalse(session1.IsOpen);
+            tran.Rollback();                    /* throws ObjectDisposedException */
+        }
+
+
+        [Test]
+        public void SelectTop1()
+        {
+            ISession session1 = SessionFactory.OpenSession();
+            var query = session1.CreateQuery("select sal from Salesman sal take 1");
+            var result = query.UniqueResult();
+
+            Assert.IsNotNull(result);
+        }
+
+        //[Test]
+        //public void SelectWithDistinctNumeration()
+        //{
+        //    ISession session1 = SessionFactory.OpenSession();
+        //    var query = session1.CreateQuery("select sal, dense_rank() over(order by sal.ID) from Salesman sal");
+        //    var result = query.List();
+
+        //    Assert.IsNotNull(result);
+        //}
     }
 }

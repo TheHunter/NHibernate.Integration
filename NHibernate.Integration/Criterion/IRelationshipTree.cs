@@ -8,41 +8,33 @@ namespace NHibernate.Criterion
     /// <summary>
     /// 
     /// </summary>
-    public interface ICriteriaCompiled
+    public interface IRelationshipTree
     {
         /// <summary>
         /// 
         /// </summary>
-        string RootAlias { get; }
+        IRelationshipTree Parent { get; }
 
         /// <summary>
         /// 
         /// </summary>
-        System.Type RootType { get; }
+        string Name { get; }
 
         /// <summary>
         /// 
         /// </summary>
-        MatchMode MatchMode { get; }
+        string Alias { get; }
 
         /// <summary>
         /// 
         /// </summary>
-        EntityMode EntityMode { get; }
+        System.Type Type { get; }
 
         /// <summary>
         /// 
         /// </summary>
-        IEnumerable<ICriterion> Restrictions { get; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        object Instance { get; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        DetachedCriteria Criteria { get; }
+        IEnumerable<IRelationshipTree> Relationships { get; }
     }
+
+    
 }

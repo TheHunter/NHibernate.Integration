@@ -52,6 +52,8 @@
     <Compile Include="Criterion\CriteriaCompiled.cs" />
     <Compile Include="Criterion\ICriteriaBuilder.cs" />
     <Compile Include="Criterion\ICriteriaCompiled.cs" />
+    <Compile Include="Criterion\IRelationshipTree.cs" />
+    <Compile Include="Criterion\RelationshipTree.cs" />
     <Compile Include="Exceptions\CriteriaBuilderException.cs" />
     <Compile Include="Exceptions\MissingAccessorsException.cs" />
     <Compile Include="Exceptions\MissingMetadataException.cs" />

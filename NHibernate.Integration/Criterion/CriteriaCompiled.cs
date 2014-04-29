@@ -16,7 +16,7 @@ namespace NHibernate.Criterion
     public class CriteriaCompiled
         : ICriteriaCompiled
     {
-        private readonly string alias;
+        private readonly string rootAlias;
         private readonly System.Type rootType;
         private readonly MatchMode matchMode;
         private readonly EntityMode entityMode;
@@ -24,6 +24,7 @@ namespace NHibernate.Criterion
         private readonly object instance;
         private readonly DetachedCriteria criteria;
         private readonly Func<System.Type, IPersistentClassInfo> classInfoProvider;
+        private readonly IRelationshipTree relationshipTree;
 
         /// <summary>
         /// 
@@ -42,18 +43,18 @@ namespace NHibernate.Criterion
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="alias"></param>
+        /// <param name="rootAlias"></param>
         /// <param name="rootType"></param>
         /// <param name="matchMode"></param>
         /// <param name="entityMode"></param>
         /// <param name="instance"></param>
         /// <param name="classInfoProvider"></param>
-        public CriteriaCompiled(string alias, System.Type rootType, MatchMode matchMode, EntityMode entityMode,
+        public CriteriaCompiled(string rootAlias, System.Type rootType, MatchMode matchMode, EntityMode entityMode,
                                 object instance, Func<System.Type, IPersistentClassInfo> classInfoProvider)
         {
             
-            if (alias == null || alias.Trim().Equals(string.Empty))
-                throw new ArgumentException("The alias for making detached criteria cannot be empty or null", "alias");
+            if (rootAlias == null || rootAlias.Trim().Equals(string.Empty))
+                throw new ArgumentException("The alias for making detached criteria cannot be empty or null", "rootAlias");
 
             if (rootType == null)
                 throw new ArgumentNullException("rootType", "The type which can be used for maikng detached criteria cannot be null.");
@@ -65,16 +66,18 @@ namespace NHibernate.Criterion
                 throw new ArgumentTypeException("The given instance for building detached criteria is not suitable for the given criteria type.", "instance", rootType, instance.GetType());
 
 
-            this.alias = alias;
+            this.rootAlias = rootAlias;
             this.rootType = rootType;
             this.matchMode = matchMode ?? MatchMode.Exact;
             this.entityMode = entityMode;
             this.instance = instance;
             this.classInfoProvider = classInfoProvider;
 
-            this.criteria = DetachedCriteria.For(rootType, alias);
+            this.criteria = DetachedCriteria.For(rootType, rootAlias);
             this.restrictions = new List<ICriterion>();
             this.Init();
+
+            //this.relationshipTree = new RelationshipTree(null, rootAlias, rootType);
         }
 
         /// <summary>
@@ -96,7 +99,7 @@ namespace NHibernate.Criterion
             }
             else
             {
-                var propertiesAssociation = new List<IPropertyInfo>(metadataInfo.Properties.Where(n => n.IsAssociationType && !n.IsCollectionType));
+                var propertiesrelationship = new List<IPropertyInfo>(metadataInfo.Properties.Where(n => n.IsAssociationType && !n.IsCollectionType));
 
                 Example criterion = Example.Create(instance)
                                     .ExcludeNulls()
@@ -110,7 +113,7 @@ namespace NHibernate.Criterion
                 this.restrictions.Add(criterion);
                 
 
-                foreach (var propertyInfo in propertiesAssociation)
+                foreach (var propertyInfo in propertiesrelationship)
                 {
                     this.AddCriterion(propertyInfo.Name,
                                  metadataInfo.GetPropertyValue(instance, propertyInfo.Name, this.entityMode));
@@ -122,9 +125,9 @@ namespace NHibernate.Criterion
         /// <summary>
         /// 
         /// </summary>
-        public string Alias
+        public string RootAlias
         {
-            get { return alias; }
+            get { return rootAlias; }
         }
 
         /// <summary>
@@ -213,7 +216,7 @@ namespace NHibernate.Criterion
             }
 
             this.restrictions.Add(criterion);
-            this.criteria.CreateAlias(string.Format("{0}.{1}", this.alias, propertyName), typeClass.Name.ToLower(), JoinType.InnerJoin, criterion);
+            this.criteria.CreateAlias(string.Format("{0}.{1}", this.rootAlias, propertyName), typeClass.Name.ToLower(), JoinType.InnerJoin, criterion);
         }
     }
 }
