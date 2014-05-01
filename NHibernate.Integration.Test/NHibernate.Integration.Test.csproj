@@ -49,6 +49,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="PersistentLayer.Domain, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>dlls\PersistentLayer.Domain.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -101,7 +105,9 @@
     <Content Include="dlls\NHibernate.dll" />
     <Content Include="dlls\NHibernate.pdb" />
     <Content Include="dlls\NHibernate.xml" />
+    <Content Include="dlls\PersistentLayer.Domain.dll" />
     <Content Include="Hbm\Agency.hbm.xml" />
+    <Content Include="Hbm\Agency2.hbm.xml" />
     <Content Include="Hbm\Salesman.hbm.xml" />
     <Content Include="Hbm\TradeContract.hbm.xml" />
   </ItemGroup>

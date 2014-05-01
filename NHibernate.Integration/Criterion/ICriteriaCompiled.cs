@@ -44,5 +44,12 @@ namespace NHibernate.Criterion
         /// 
         /// </summary>
         DetachedCriteria Criteria { get; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="property"></param>
+        /// <returns></returns>
+        IRelationshipTree FindRelationshipProperty(string property);
     }
 }

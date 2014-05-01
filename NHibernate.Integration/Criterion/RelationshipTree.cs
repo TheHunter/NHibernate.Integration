@@ -21,7 +21,6 @@ namespace NHibernate.Criterion
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="parent"></param>
         /// <param name="alias"></param>
         /// <param name="type"></param>
         internal protected RelationshipTree(string alias, System.Type type)
@@ -39,7 +38,7 @@ namespace NHibernate.Criterion
         /// <param name="name"></param>
         /// <param name="alias"></param>
         /// <param name="type"></param>
-        internal protected RelationshipTree(IRelationshipTree parent, string name, string alias, System.Type type)
+        private RelationshipTree(IRelationshipTree parent, string name, string alias, System.Type type)
         {
             this.isRoot = false;
             this.parent = parent;
@@ -84,6 +83,21 @@ namespace NHibernate.Criterion
         /// <summary>
         /// 
         /// </summary>
+        /// <returns></returns>
+        public string GetPath()
+        {
+            string part1 = this.Parent == null ? string.Empty : (this.Parent.Alias + ".");
+            string part2 = this.Name ?? string.Empty;
+
+            if (string.Empty == part1 || string.Empty == part2)
+                return string.Empty;
+
+            return string.Format("{0}{1}", part1, part2);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public IEnumerable<IRelationshipTree> Relationships
         {
             get { return relationships; }
@@ -92,21 +106,24 @@ namespace NHibernate.Criterion
         /// <summary>
         /// 
         /// </summary>
-        internal void AddRelationship(IRelationshipTree relationshipTree)
+        /// <param name="name"></param>
+        /// <param name="alias"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public IRelationshipTree AddRelationship(string name, string alias, System.Type type)
         {
-            if (relationshipTree != null)
-                this.relationships.Add(relationshipTree);
+            IRelationshipTree relationship = new RelationshipTree(this, name, alias, type);
+            this.relationships.Add(relationship);
+            return relationship;
         }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="alias"></param>
-        /// <param name="type"></param>
-        internal void AddRelationship(string name, string alias, System.Type type)
+        /// <returns></returns>
+        public override string ToString()
         {
-            this.relationships.Add(new RelationshipTree(this, name, alias, type));
+            return string.Format("Root: {0}, Name: {1}, Alias: {2}", this.Parent == null ? "null" : this.Parent.Alias, this.Name ?? "null", this.Alias);
         }
     }
 }

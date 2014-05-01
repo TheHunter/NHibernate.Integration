@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using NHibernate;
 using NHibernate.Criterion;
+using NHibernate.Linq;
 using NUnit.Framework;
 using TheHunter.Domain;
 
@@ -43,6 +45,7 @@ namespace NHibernate.Integration.Test
 
             criteriaCompiled = criteriaBuilder.MakeCriteria(instance as object);
             Assert.AreEqual(criteriaCompiled.RootAlias, "salesman");
+            Assert.AreEqual(criteriaCompiled.RootType, typeof(Salesman));
             Assert.AreEqual(criteriaCompiled.Restrictions.Count(), 1);
             using (ISession session = SessionFactory.OpenSession())
             {
@@ -52,6 +55,7 @@ namespace NHibernate.Integration.Test
 
             criteriaCompiled = criteriaBuilder.MakeCriteria(instance as object, "sal");
             Assert.AreEqual(criteriaCompiled.RootAlias, "sal");
+            Assert.AreEqual(criteriaCompiled.RootType, typeof(Salesman));
             Assert.AreEqual(criteriaCompiled.Restrictions.Count(), 1);
             using (ISession session = SessionFactory.OpenSession())
             {
@@ -61,6 +65,7 @@ namespace NHibernate.Integration.Test
 
             criteriaCompiled = criteriaBuilder.MakeCriteria(instance);
             Assert.AreEqual(criteriaCompiled.RootAlias, "salesman");
+            Assert.AreEqual(criteriaCompiled.RootType, typeof(Salesman));
             Assert.AreEqual(criteriaCompiled.Restrictions.Count(), 1);
             using (ISession session = SessionFactory.OpenSession())
             {
@@ -70,6 +75,7 @@ namespace NHibernate.Integration.Test
 
             criteriaCompiled = criteriaBuilder.MakeCriteria(instance, "sal");
             Assert.AreEqual(criteriaCompiled.RootAlias, "sal");
+            Assert.AreEqual(criteriaCompiled.RootType, typeof(Salesman));
             Assert.AreEqual(criteriaCompiled.Restrictions.Count(), 1);
             using (ISession session = SessionFactory.OpenSession())
             {
@@ -79,6 +85,7 @@ namespace NHibernate.Integration.Test
 
             criteriaCompiled = criteriaBuilder.MakeCriteria(typeof(Salesman), instance);
             Assert.AreEqual(criteriaCompiled.RootAlias, "salesman");
+            Assert.AreEqual(criteriaCompiled.RootType, typeof(Salesman));
             Assert.AreEqual(criteriaCompiled.Restrictions.Count(), 1);
             using (ISession session = SessionFactory.OpenSession())
             {
@@ -88,6 +95,7 @@ namespace NHibernate.Integration.Test
 
             criteriaCompiled = criteriaBuilder.MakeCriteria(typeof(Salesman), instance, "sal");
             Assert.AreEqual(criteriaCompiled.RootAlias, "sal");
+            Assert.AreEqual(criteriaCompiled.RootType, typeof(Salesman));
             Assert.AreEqual(criteriaCompiled.Restrictions.Count(), 1);
             using (ISession session = SessionFactory.OpenSession())
             {
@@ -107,7 +115,8 @@ namespace NHibernate.Integration.Test
                 };
 
             criteriaCompiled = criteriaBuilder.MakeCriteria(instance);
-            Assert.AreEqual(criteriaCompiled.RootAlias, "carcontract");
+            Assert.AreEqual(criteriaCompiled.RootAlias, "carContract");
+            Assert.AreEqual(criteriaCompiled.RootType, typeof(CarContract));
             Assert.AreEqual(criteriaCompiled.Restrictions.Count(), 2);
             using (ISession session = SessionFactory.OpenSession())
             {
@@ -116,7 +125,8 @@ namespace NHibernate.Integration.Test
             }
 
             criteriaCompiled = criteriaBuilder.MakeCriteria(typeof(CarContract), instance);
-            Assert.AreEqual(criteriaCompiled.RootAlias, "carcontract");
+            Assert.AreEqual(criteriaCompiled.RootAlias, "carContract");
+            Assert.AreEqual(criteriaCompiled.RootType, typeof(CarContract));
             Assert.AreEqual(criteriaCompiled.Restrictions.Count(), 2);
             using (ISession session = SessionFactory.OpenSession())
             {
@@ -125,7 +135,8 @@ namespace NHibernate.Integration.Test
             }
 
             criteriaCompiled = criteriaBuilder.MakeCriteria<TradeContract>(instance);
-            Assert.AreEqual(criteriaCompiled.RootAlias, "tradecontract");
+            Assert.AreEqual(criteriaCompiled.RootAlias, "tradeContract");
+            Assert.AreEqual(criteriaCompiled.RootType, typeof(TradeContract));
             Assert.AreEqual(criteriaCompiled.Restrictions.Count(), 2);
             using (ISession session = SessionFactory.OpenSession())
             {
@@ -153,7 +164,8 @@ namespace NHibernate.Integration.Test
             };
 
             criteriaCompiled = criteriaBuilder.MakeCriteria(instance);
-            Assert.AreEqual(criteriaCompiled.RootAlias, "carcontract");
+            Assert.AreEqual(criteriaCompiled.RootAlias, "carContract");
+            Assert.AreEqual(criteriaCompiled.RootType, typeof(CarContract));
             Assert.AreEqual(criteriaCompiled.Restrictions.Count(), 2);
             using (ISession session = SessionFactory.OpenSession())
             {
@@ -164,7 +176,8 @@ namespace NHibernate.Integration.Test
 
             instance.Owner = new Salesman(0);
             criteriaCompiled = criteriaBuilder.MakeCriteria(instance);
-            Assert.AreEqual(criteriaCompiled.RootAlias, "carcontract");
+            Assert.AreEqual(criteriaCompiled.RootAlias, "carContract");
+            Assert.AreEqual(criteriaCompiled.RootType, typeof(CarContract));
             Assert.AreEqual(criteriaCompiled.Restrictions.Count(), 2);
             using (ISession session = SessionFactory.OpenSession())
             {
@@ -175,12 +188,79 @@ namespace NHibernate.Integration.Test
 
             instance.Owner = new Salesman{Name = "pippo"};
             criteriaCompiled = criteriaBuilder.MakeCriteria(instance);
-            Assert.AreEqual(criteriaCompiled.RootAlias, "carcontract");
+            Assert.AreEqual(criteriaCompiled.RootAlias, "carContract");
+            Assert.AreEqual(criteriaCompiled.RootType, typeof(CarContract));
             Assert.AreEqual(criteriaCompiled.Restrictions.Count(), 2);
             using (ISession session = SessionFactory.OpenSession())
             {
                 var lista = criteriaCompiled.Criteria.GetExecutableCriteria(session).List();
                 Assert.AreEqual(lista.Count, 0);
+            }
+        }
+
+        [Test]
+        public void TestCriteriaCompiled4()
+        {
+            ICriteriaCompiled criteriaCompiled = null;
+            ICriteriaBuilder criteriaBuilder = new CriteriaBuilder(SessionFactory.GetClassMetadata);
+            CarContract instance = new CarContract
+            {
+                Owner = new Salesman(1)
+            };
+
+            criteriaCompiled = criteriaBuilder.MakeCriteria<TradeContract>(instance);
+            Assert.AreEqual(criteriaCompiled.RootAlias, "tradeContract");
+            Assert.AreEqual(criteriaCompiled.RootType, typeof(TradeContract));
+            Assert.AreEqual(criteriaCompiled.Restrictions.Count(), 2);
+
+            var relationship = criteriaCompiled.FindRelationshipProperty("Owner");
+            Assert.IsNotNull(relationship);
+
+            Assert.AreEqual(relationship.Type, typeof(Salesman));
+            Assert.AreEqual(relationship.Alias, "salesman");
+            Assert.AreEqual(relationship.GetPath(), "tradeContract.Owner");
+
+            //PersistentLayer.Domain.Salesman aaa = new PersistentLayer.Domain.Salesman();
+            
+        }
+
+        [Test]
+        public void TestNhDuplicateMappings()
+        {
+            using (ISession session = SessionFactory.OpenSession())
+            {
+                DetachedCriteria criteria = DetachedCriteria.For<Agency>();
+                var res = criteria.GetExecutableCriteria(session)
+                                  .List();
+
+                Assert.IsNotNull(res);
+            }
+
+            using (ISession session = SessionFactory.OpenSession())
+            {
+                var res = session.Query<Agency>().ToList();
+                Assert.IsNotNull(res);
+            }
+
+            using (ISession session = SessionFactory.OpenSession())
+            {
+                DetachedCriteria criteria = DetachedCriteria.For<PersistentLayer.Domain.Agency>();
+                var res = criteria.GetExecutableCriteria(session)
+                                  .List();
+
+                Assert.IsNotNull(res);
+            }
+
+            using (ISession session = SessionFactory.OpenSession())
+            {
+                var res = session.Query<PersistentLayer.Domain.Agency>().ToList();
+                Assert.IsNotNull(res);
+            }
+
+            using (ISession session = SessionFactory.OpenSession())
+            {
+                var res = session.CreateQuery("from Agency").List();
+                Assert.IsNotNull(res);
             }
         }
     }

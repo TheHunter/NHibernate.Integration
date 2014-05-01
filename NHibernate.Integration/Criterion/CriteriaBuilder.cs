@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using NHibernate.Exceptions;
+using NHibernate.Extra;
 using NHibernate.Metadata;
 using NHibernate.SqlCommand;
 
@@ -128,7 +129,7 @@ namespace NHibernate.Criterion
             if (persistentClass == null)
                 return null;
 
-            return MakeCriteria(persistentClass, instance, persistentClass.Name.ToLower());
+            return MakeCriteria(persistentClass, instance, persistentClass.Name.ToCamelCase());
         }
 
         /// <summary>
