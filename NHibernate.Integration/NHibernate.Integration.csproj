@@ -60,6 +60,7 @@
     <Compile Include="Exceptions\MissingPropertyException.cs" />
     <Compile Include="Exceptions\PropertyAccessorException.cs" />
     <Compile Include="Extra\ClrExtensions.cs" />
+    <Compile Include="Extra\NhExtensions.cs" />
     <Compile Include="Metadata\IPersistentClassInfo.cs" />
     <Compile Include="Metadata\IPropertyInfo.cs" />
     <Compile Include="Metadata\PersistentClassInfo.cs" />

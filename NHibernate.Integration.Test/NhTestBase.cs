@@ -36,7 +36,7 @@ namespace NHibernate.Integration.Test
 
             if (BeforeBuilding != null)
                 this.BeforeBuilding.Invoke(cfg);
-            
+
             sessionFactory = cfg.BuildSessionFactory();
         }
 

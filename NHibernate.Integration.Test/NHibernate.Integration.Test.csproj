@@ -66,6 +66,7 @@
     <Compile Include="Dialect\AdvancedSqlDialect.cs" />
     <Compile Include="Dialect\Function\ScalarArgsSqlFunction.cs" />
     <Compile Include="Dialect\Function\SqlAggregateFunction.cs" />
+    <Compile Include="NhExtensions.cs" />
     <Compile Include="NhTestBase.cs" />
     <Compile Include="Poco\Agency.cs" />
     <Compile Include="Poco\CarContract.cs" />
@@ -81,7 +82,9 @@
     <Compile Include="Queries.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -100,10 +103,8 @@
     </Content>
     <Content Include="Cfg\Configuration.xml" />
     <Content Include="dlls\Iesi.Collections.dll" />
-    <Content Include="dlls\Iesi.Collections.pdb" />
     <Content Include="dlls\Iesi.Collections.xml" />
     <Content Include="dlls\NHibernate.dll" />
-    <Content Include="dlls\NHibernate.pdb" />
     <Content Include="dlls\NHibernate.xml" />
     <Content Include="dlls\PersistentLayer.Domain.dll" />
     <Content Include="Hbm\Agency.hbm.xml" />

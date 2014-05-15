@@ -259,8 +259,32 @@ namespace NHibernate.Integration.Test
 
             using (ISession session = SessionFactory.OpenSession())
             {
-                var res = session.CreateQuery("from Agency").List();
+                var res = session.CreateQuery("from Agency").List<Agency>();
                 Assert.IsNotNull(res);
+
+                var res2 = session.CreateQuery("from TheHunter.Domain.Agency").List<Agency>();
+                Assert.IsNotNull(res2);
+
+                var res3 = session.CreateQuery("from PersistentLayer.Domain.Agency").List<PersistentLayer.Domain.Agency>();
+                Assert.IsNotNull(res3);
+            }
+        }
+
+        [Test]
+        [ExpectedException(typeof(ArgumentException))]
+        public void FailedTestNhDuplicateMappings1()
+        {
+            using (ISession session = SessionFactory.OpenSession())
+            {
+                try
+                {
+                    var res = session.CreateQuery("from Agency").List<PersistentLayer.Domain.Agency>();
+                    Assert.IsNotNull(res);
+                }
+                catch (Exception ex)
+                {
+                    throw ex.InnerException;
+                }
             }
         }
     }
