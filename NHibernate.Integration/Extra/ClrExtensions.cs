@@ -22,5 +22,6 @@ namespace NHibernate.Extra
 
             return str.Substring(0, 1).ToLower() + str.Substring(1);
         }
+
     }
 }
