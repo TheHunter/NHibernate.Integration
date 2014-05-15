@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NHibernate.Cfg;
+using NHibernate.Criterion;
 using NHibernate.Dialect.Function;
 using NHibernate.Hql.Ast.ANTLR;
 using NHibernate.Linq;
@@ -171,7 +172,6 @@ namespace NHibernate.Integration.Test
 
                 var lista = query.List();
                 Assert.IsNotNull(lista);
-
             }
         }
 
@@ -187,7 +187,6 @@ namespace NHibernate.Integration.Test
 
                 Assert.IsNotNull(result);
             }
-
             session.BeginTransaction();
         }
 
@@ -222,7 +221,6 @@ namespace NHibernate.Integration.Test
             {
                 
             }
-         
             var tran = session.Transaction;
             tran.Commit();                          /* throws ObjectDisposedException */
         }
@@ -254,25 +252,150 @@ namespace NHibernate.Integration.Test
             tran.Rollback();                    /* throws ObjectDisposedException */
         }
 
-
         [Test]
         public void SelectTop1()
         {
-            ISession session1 = SessionFactory.OpenSession();
-            var query = session1.CreateQuery("select sal from Salesman sal take 1");
-            var result = query.UniqueResult();
+            using (ISession session1 = SessionFactory.OpenSession())
+            {
+                var query = session1.CreateQuery("select sal from Salesman sal take 1");
+                var result = query.UniqueResult();
 
-            Assert.IsNotNull(result);
+                Assert.IsNotNull(result);
+            }
+        }
+
+        [Test]
+        public void SelectUnique()
+        {
+            using (ISession session1 = SessionFactory.OpenSession())
+            {
+                var criteria = DetachedCriteria.For<Salesman>().Add(Restrictions.IdEq(1L));
+                var result = criteria.GetExecutableCriteria(session1).UniqueResult();
+                Assert.IsNotNull(result);
+            }
+
+            using (ISession session1 = SessionFactory.OpenSession())
+            {
+                var criteria = QueryOver.Of<Salesman>().And(Restrictions.IdEq(1L));
+                var result = criteria.GetExecutableQueryOver(session1)
+                                     .UnderlyingCriteria
+                                     .UniqueResult();
+                Assert.IsNotNull(result);
+            }
+
+            using (ISession session1 = SessionFactory.OpenSession())
+            {
+                var query = session1.Query<Salesman>();
+                var result = query.First(salesman => salesman.ID == 1);
+                Assert.IsNotNull(result);
+            }
+        }
+
+        [Test]
+        [ExpectedException(typeof(NonUniqueResultException))]
+        public void WrongSelectUnique1()
+        {
+            using (ISession session1 = SessionFactory.OpenSession())
+            {
+                var criteria = DetachedCriteria.For<Salesman>().Add(Restrictions.Eq("Name", "Manuel"));
+                var result = criteria.GetExecutableCriteria(session1).UniqueResult();
+                Assert.IsNotNull(result);
+            }
+        }
+
+        [Test]
+        [ExpectedException(typeof(Exception))]
+        public void WrongSelectUnique2()
+        {
+            using (ISession session1 = SessionFactory.OpenSession())
+            {
+                var query = session1.Query<Salesman>();
+                var res1 = query.Where(salesman => salesman.Name == "Manuel");
+
+                var result = query.First(salesman => salesman.Name == "Manuel");
+
+                if (result == null)
+                    throw new Exception("Result cannot be null");
+
+                if (res1.Count() > 1)
+                    throw new Exception("Query result must throw an exception because the result is bigger than one instance.");
+            }
         }
 
         //[Test]
-        //public void SelectWithDistinctNumeration()
+        //[ExpectedException(typeof(NonUniqueResultException))]
+        //public void WrongSelectUnique3()
         //{
-        //    ISession session1 = SessionFactory.OpenSession();
-        //    var query = session1.CreateQuery("select sal, dense_rank() over(order by sal.ID) from Salesman sal");
-        //    var result = query.List();
-
-        //    Assert.IsNotNull(result);
+        //    using (ISession session1 = SessionFactory.OpenSession())
+        //    {
+        //        var criteria = DetachedCriteria.For<Salesman>().Add(Restrictions.Eq("Name", "Silvio"));
+        //        var result = criteria.GetExecutableCriteria(session1).UniqueResult();
+        //        Assert.IsNotNull(result);
+        //    }
         //}
+
+        [Test]
+        public void TestProjection1()
+        {
+            using (ISession session1 = SessionFactory.OpenSession())
+            {
+                var query = session1.Query<TradeContract>();
+                var result = query.Where(contract => contract.Owner.Name != "Manuel")
+                        .Select(contract => contract.Owner)
+                        .Distinct()
+                        .ToList();
+                Assert.IsNotNull(result);
+            }
+        }
+
+        [Test]
+        public void TestProjection2()
+        {
+            using (ISession session1 = SessionFactory.OpenSession())
+            {
+                var query = session1.Query<TradeContract>();
+                var result = query.Where(contract => contract.Owner.Name != "Manuel");
+                Assert.IsNotNull(result);
+            }
+        }
+
+        [Test]
+        [ExpectedException(typeof(NotSupportedException))]
+        public void TestProjection3()
+        {
+            using (ISession session1 = SessionFactory.OpenSession())
+            {
+                var query = session1.Query<TradeContract>();
+                var result = query.Select(contract => new { contract.Owner.Name, contract.Owner.Surname })
+                                  .Distinct()
+                                  .ToList()
+                                  ;
+
+                Assert.IsNotNull(result);
+            }
+        }
+
+        [Test]
+        [ExpectedException(typeof(NotSupportedException))]
+        public void TestProjection4()
+        {
+            using (ISession session1 = SessionFactory.OpenSession())
+            {
+                var query = session1.Query<TradeContract>();
+                var result = query.Select(contract => new Tester  { Name=contract.Owner.Name, Surname=contract.Owner.Surname })
+                                  .Distinct()
+                                  .ToList()
+                                  ;
+
+                Assert.IsNotNull(result);
+            }
+        }
+    }
+
+    class Tester
+    {
+        public string Name { get; set; }
+        public string Surname { get; set; }
     }
 }
+
