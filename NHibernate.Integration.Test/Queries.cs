@@ -390,6 +390,26 @@ namespace NHibernate.Integration.Test
                 Assert.IsNotNull(result);
             }
         }
+
+        [Test]
+        public void TestLoad1()
+        {
+            using (ISession session1 = SessionFactory.OpenSession())
+            {
+                var ret = session1.Load<Salesman>(-1L, LockMode.None);
+                Assert.IsNotNull(ret);
+            }
+        }
+
+        [Test]
+        public void TestLoad2()
+        {
+            using (ISession session1 = SessionFactory.OpenSession())
+            {
+                var ret = session1.Load<Salesman>(-1L);
+                Assert.IsNotNull(ret);
+            }
+        }
     }
 
     class Tester

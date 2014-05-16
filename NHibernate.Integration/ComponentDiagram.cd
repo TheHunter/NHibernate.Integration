@@ -1,24 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Comment CommentText="Componenti da deprecare">
-    <Position X="2.654" Y="0.5" Height="0.531" Width="1.7" />
-  </Comment>
-  <Comment CommentText="Da Eliminare il membro TransformInstance in IPocoTransformer">
-    <Position X="7.25" Y="4" Height="0.531" Width="1.7" />
-  </Comment>
   <Class Name="NHibernate.Transform.PocoTransformerResult" BaseTypeListCollapsed="true">
     <Position X="11.25" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAABQAAIEgAAAAAAAAEBA=</HashCode>
       <FileName>Transform\PocoTransformerResult.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="NHibernate.ServiceLocator.EnterpriseServiceResolver">
-    <Position X="18.25" Y="3" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AACAAAAAAAgAAAAIAAAAAAABAgAAAAAAgAAAAIAAAAA=</HashCode>
-      <FileName>ServiceLocator\EnterpriseServiceResolver.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
@@ -33,7 +19,7 @@
   <Class Name="NHibernate.Criterion.CriteriaBuilder">
     <Position X="19.75" Y="8.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>QAAAAAAAAJAAAAAAAAAAAAABAAAAAAAAAAIAAAAAAgA=</HashCode>
+      <HashCode>QAAAAAAAAJgAAAAAAAAAAIABAAAAAAAAAAAAAAAAAgA=</HashCode>
       <FileName>Criterion\CriteriaBuilder.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -105,6 +91,43 @@
       <FileName>Exceptions\PropertyAccessorException.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="NHibernate.Criterion.CriteriaCompiled" BaseTypeListCollapsed="true">
+    <Position X="8.5" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAEAAAIBAEAAAAJAAAAAAAABAAAABQAKCABAAgAw=</HashCode>
+      <FileName>Criterion\CriteriaCompiled.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="NHibernate.Criterion.RelationshipTree" BaseTypeListCollapsed="true">
+    <Position X="11.5" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAIAAABkAAAAQAQAAAAHAAAAAwAAAAIAAAA=</HashCode>
+      <FileName>Criterion\RelationshipTree.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="NHibernate.Extra.ClrExtensions">
+    <Position X="25" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Extra\ClrExtensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NHibernate.Extra.NhExtensions">
+    <Position X="27" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Extra\NhExtensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NHibernate.Reflection.HelperType">
+    <Position X="23" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAIAAAAA=</HashCode>
+      <FileName>Reflection\HelperType.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Interface Name="NHibernate.Transform.IPocoTransformerResult">
     <Position X="9" Y="3.75" Width="1.5" />
     <TypeIdentifier>
@@ -115,13 +138,6 @@
   <Interface Name="NHibernate.Transform.IResultTransformer">
     <Position X="9" Y="1.5" Width="1.5" />
     <TypeIdentifier />
-  </Interface>
-  <Interface Name="NHibernate.ServiceLocator.IServiceResolver">
-    <Position X="18.25" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AACAAAAAAAgAAAAAAAAAAAABAgAAAAAAAAAAAIAAAAA=</HashCode>
-      <FileName>ServiceLocator\IServiceResolver.cs</FileName>
-    </TypeIdentifier>
   </Interface>
   <Interface Name="NHibernate.Resolvers.IPocoResolver">
     <Position X="16.75" Y="6.25" Width="1.5" />
@@ -163,6 +179,20 @@
     <TypeIdentifier>
       <HashCode>CAAAAAIAAQAAAAAEAAQIAEQAgAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Metadata\IPropertyInfo.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="NHibernate.Criterion.ICriteriaCompiled">
+    <Position X="8.5" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAAAAAJAAAAAAAAAAAAABQACAABAAAAQ=</HashCode>
+      <FileName>Criterion\ICriteriaCompiled.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="NHibernate.Criterion.IRelationshipTree">
+    <Position X="11.5" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAgAAAAQAQAAAACAAAAAQAAAAIAAAA=</HashCode>
+      <FileName>Criterion\IRelationshipTree.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Enum Name="NHibernate.Reflection.AccessType">
