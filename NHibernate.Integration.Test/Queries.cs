@@ -392,7 +392,7 @@ namespace NHibernate.Integration.Test
         }
 
         [Test]
-        public void TestLoad1()
+        public void TestLoadForNone()
         {
             using (ISession session1 = SessionFactory.OpenSession())
             {
@@ -402,11 +402,66 @@ namespace NHibernate.Integration.Test
         }
 
         [Test]
-        public void TestLoad2()
+        public void TestLoadForDefault()
         {
             using (ISession session1 = SessionFactory.OpenSession())
             {
                 var ret = session1.Load<Salesman>(-1L);
+                Assert.IsNotNull(ret);
+            }
+        }
+
+        [Test]
+        [ExpectedException(typeof(ObjectNotFoundException))]
+        public void TestLoadForRead()
+        {
+            using (ISession session1 = SessionFactory.OpenSession())
+            {
+                var ret = session1.Load<Salesman>(-1L, LockMode.Read);
+                Assert.IsNotNull(ret);
+            }
+        }
+
+        [Test]
+        [ExpectedException(typeof(ObjectNotFoundException))]
+        public void TestLoadForUpgrade()
+        {
+            using (ISession session1 = SessionFactory.OpenSession())
+            {
+                var ret = session1.Load<Salesman>(-1L, LockMode.Upgrade);
+                Assert.IsNotNull(ret);
+            }
+        }
+
+        [Test]
+        [ExpectedException(typeof(ObjectNotFoundException))]
+        public void TestLoadForUpgradeNoWait()
+        {
+            using (ISession session1 = SessionFactory.OpenSession())
+            {
+                var ret = session1.Load<Salesman>(-1L, LockMode.UpgradeNoWait);
+                Assert.IsNotNull(ret);
+            }
+        }
+
+        [Test]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void TestLoadForWrite()
+        {
+            using (ISession session1 = SessionFactory.OpenSession())
+            {
+                var ret = session1.Load<Salesman>(-1L, LockMode.Write);
+                Assert.IsNotNull(ret);
+            }
+        }
+
+        [Test]
+        [ExpectedException(typeof(ObjectNotFoundException))]
+        public void TestLoadForForce()
+        {
+            using (ISession session1 = SessionFactory.OpenSession())
+            {
+                var ret = session1.Load<Salesman>(-1L, LockMode.Force);
                 Assert.IsNotNull(ret);
             }
         }
